@@ -1,8 +1,8 @@
-const { Schema } = require('mongoose');
+const { Schema,model } = require('mongoose');
 
 const AccountSchema = Schema({
     email: {
-        type: SchemaTypes.ObjectId,
+        type: String,
         require: true
     },
     trackers: [
