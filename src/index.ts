@@ -1,2 +1,3 @@
 require('dotenv').config()
-require('./bdConection')
+import "./db/connection";
+
