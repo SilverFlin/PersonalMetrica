@@ -1,4 +1,7 @@
-const {Account} = require('../models/account.model.js')
+const { Account, Tracker } = require('../models/account.model.js')
+/**
+ * 
+ */
 class AccountController {
     constructor() {
 
@@ -12,6 +15,7 @@ class AccountController {
         const newAccount = await new Account(data).save()
         if (newAccount) {
             // return
+            return newAccount
         }
     }
     /**
@@ -41,8 +45,34 @@ class AccountController {
         await Account.findOneAndDelete(query)
     }
 
+    async createTracker(query, data) {
 
+        const account = await Account.findOne(query);
+
+        account.trackers.push(data);
+        return await account.save()
+
+    }
+    async updateTracker(query, nameTracker, data) {
+
+        const account = await Account.findOne(query);
+        const updateTracker = account.trackers.find(e => e.name === nameTracker)
+        if (!updateTracker) return new Error('Tracker does not exists!!')
+        updateTracker.name = data.name
+
+        await account.save()
+
+    }
+
+    async removeTracker(query, nameTracker) {
+
+        const account = await Account.findOne(query);
+        const updateTracker = account.trackers.filter(e => e.name !== nameTracker)
+        if (!updateTracker) return new Error('Tracker does not exists!!')
+        account.trackers = updateTracker
+        await account.save()
+    }
 
 }
 
-module.exports =AccountController;
+module.exports = AccountController;
