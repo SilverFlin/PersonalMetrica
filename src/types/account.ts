@@ -2,9 +2,9 @@ import { Types } from "mongoose";
 
 interface TrackerDTO {
     _id?: Types.ObjectId;
-    typeTracker: "habit" | "timer";
+    readonly typeTracker: "habit" | "timer";
     name: string;
-    creationTime: Date;
+    readonly creationTime: Date;
     recordId?: Types.ObjectId;
 }
 

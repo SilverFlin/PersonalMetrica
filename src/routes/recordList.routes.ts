@@ -44,6 +44,18 @@ router.delete('/:id', (req, res) => {
             res.status(500).json({ message: error.message })
         })
 })
+//TODO: move to its own route
+router.put('/recordItem/:id', (req, res) => {
+    const recordListController = new RecordListController()
+    recordListController.insertRecord({ _id: req.params.id }, req.body)
+        .then((record) => {
+            res.status(200).json(record)
+        })
+        .catch((error) => {
+            res.status(500).json({ message: error.message })
+        })
+
+})
 
 
 export default router

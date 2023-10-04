@@ -1,5 +1,5 @@
 import { RecordListModel } from '../models/record.model'
-import { RecordListDTO } from '../types'
+import { RecordListDTO, HabitRecordDTO, TimerRecordDTO } from '../types'
 
 interface RecordListQuery {
     _id: string | null;
@@ -53,6 +53,33 @@ class RecordListController {
                 resolve(deletedRecord)
             } else {
                 reject(new Error('Error deleting record'))
+            }
+        })
+    }
+    // 
+    async insertRecord(query: RecordListQuery, data: any) {
+        const record = await RecordListModel.findOne(query)
+        //FIXME: validate data and if element was pushed  
+        return new Promise((resolve, reject) => {
+            if (!record) {
+                reject(new Error('RecordList not found!'))
+            } else {
+                if (record.typeRecord === 'timer') {
+                    const timerRecord: TimerRecordDTO = { durationInSeconds: data.durationInSeconds }
+                    record.records.push(timerRecord)
+
+                }
+                if (record.typeRecord === 'habit') {
+                    const habitRecord: HabitRecordDTO = { habitCompletion: data.habitCompletion }
+                    record.records.push(habitRecord)
+                }
+
+                record.save().then(record => {
+                    resolve(record)
+                }).catch(err => {
+                    reject(err)
+                })
+
             }
         })
     }
