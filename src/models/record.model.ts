@@ -1,5 +1,5 @@
 
-const { Schema, model, Types } = require('mongoose');
+import { Schema, model, Types } from 'mongoose';
 
 const HabitRecord = new Schema({
     _id: {
@@ -26,22 +26,24 @@ const TimerRecord = new Schema({
     }
 })
 
-const RecordSchema = new Schema({
+const RecordListSchema = new Schema({
+
     typeRecord: {
         type: String,
         enum: ['habit', 'timer'],
         required: true
     },
-    records: [
-        {
-            type: Schema.Types.Mixed,
-            required: true
-        }
-    ]
+    records: [{
+        type: Schema.Types.Mixed,
+        required: true
+    }]
 
 })
-module.exports = {
-    Record: model('Record', RecordSchema),
+
+const RecordListModel = model('Record', RecordListSchema)
+
+export {
+    RecordListModel,
     HabitRecord,
     TimerRecord
 }
