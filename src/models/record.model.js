@@ -1,19 +1,47 @@
 
-const { Schema,model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
+const HabitRecord = new Schema({
+    _id: {
+        type: Schema.Types.ObjectId,
+        default: new Types.ObjectId(),
+        required: true
+    },
 
-const RecordSchema = Schema({
+    habitCompletion: {
+        type: Boolean,
+        required: true
+    }
+})
+
+const TimerRecord = new Schema({
+    _id: {
+        type: Schema.Types.ObjectId,
+        default: new Types.ObjectId(),
+        required: true
+    },
+    durationInSeconds: {
+        type: Number,
+        required: true
+    }
+})
+
+const RecordSchema = new Schema({
     typeRecord: {
         type: String,
         enum: ['habit', 'timer'],
-        require: true
+        required: true
     },
     records: [
         {
-            _id: { type: Schema.Types.ObjectId }
-            ///
+            type: Schema.Types.Mixed,
+            required: true
         }
     ]
 
 })
-module.exports.Record = model('Record', RecordSchema)
+module.exports = {
+    Record: model('Record', RecordSchema),
+    HabitRecord,
+    TimerRecord
+}

@@ -1,37 +1,46 @@
-const { Schema,model } = require('mongoose');
+const { Schema, model, Types } = require('mongoose');
 
-const AccountSchema = Schema({
+const TrackerSchema = new Schema({
+    _id: {
+        type: Schema.Types.ObjectId,
+        default: new Types.ObjectId(),
+         required: true
+    },
+    typeTracker: {
+        type: String,
+        enum: ['habit', 'timer'],
+        required: true
+    },
+    name: {
+        type: String,
+        required: true
+    },
+    creationTime: {
+        type: Date,
+        required: true,
+        default: Date.now()
+    },
+    recordId: {
+        type: Schema.Types.ObjectId
+    }
+})
+
+const AccountSchema = new Schema({
     email: {
         type: String,
-        require: true
+        required: true,
     },
     trackers: [
         {
-            _id: {
-                type: Schema.Types.ObjectId
-                , require: true
-            },
-            typeTracker: {
-                type: String,
-                enum: ['habit', 'timer'],
-                require: true
-            },
-            name: {
-                type: String,
-                require: true
-            },
-            creationTime: {
-                type: Date,
-                require: true,
-                default: Date.now()
-            },
-            recordsId: {
-                type: Schema.Types.ObjectId,
-                require: true
-            }
+            type: TrackerSchema,
+            required: true
         }
     ]
 
 })
 
-module.exports.Account = model('Account', AccountSchema)
+module.exports =
+{
+    Account: model('Account', AccountSchema),
+    Tracker: TrackerSchema
+}
