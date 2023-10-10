@@ -36,9 +36,19 @@ router.put('/:id', (req, res) => {
 })
 
 // TODO move to its own router
+router.post('/tracker/:id', (req, res) => {
+    const accountController = new AccountController()
+    accountController.createTracker({ _id: req.params.id }, req.body)
+        .then((account) => {
+            res.status(200).json(account)
+        }).catch((error) => {
+            res.status(500).json({ message: error.message })
+        })
+})
+// TODO move to its own router
 router.put('/tracker/:id', (req, res) => {
     const accountController = new AccountController()
-    accountController.updateAccount({ _id: req.params.id }, req.body)
+    accountController.updateTracker({ _id: req.params.id }, req.query.name as string, req.body.data)
         .then((account) => {
             res.status(200).json(account)
         }).catch((error) => {

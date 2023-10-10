@@ -81,6 +81,7 @@ class AccountController {
         })
     }
 
+    //FIXME: validate data 
     async updateTracker(query: AccountQuery, nameTracker: string, data: TrackerDTO): Promise<AccountDTO | null> {
 
         const account = await AccountModel.findOne(query);
@@ -89,12 +90,17 @@ class AccountController {
             if (!account) {
                 reject(new Error('Account not found'))
             } else {
-                const updateTracker = account.trackers.filter(e => e.name !== nameTracker)
+                const updateTracker = account.trackers.find(e => e.name === nameTracker)
                 if (!updateTracker) {
                     reject(new Error('Tracker not found'))
                 }
-                account.trackers = updateTracker
-                account.trackers.push(data);
+                if (updateTracker)
+                    updateTracker.name = data.name
+                if (data.recordId) {
+                    
+                    updateTracker?.recordId = data.recordId
+                }
+
                 account.save().then((account) => {
                     resolve(account)
                 }).catch((error) => {
