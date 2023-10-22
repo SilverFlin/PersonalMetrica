@@ -1,6 +1,7 @@
 import { AccountDTO, TrackerDTO } from "../types"
 
 import { AccountModel, TrackerSchema } from '../models/account.model'
+import { BadRequest } from "../exceptions/Errors";
 
 interface AccountQuery {
     _id?: string;

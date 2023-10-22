@@ -1,21 +1,21 @@
 import { Router } from 'express'
 import { AccountController } from '../controllers/account.controller'
+import { BadRequest } from '../exceptions/Errors'
+import { accountValidator, paramIdValidator } from '../middlewares/validator'
 
 const router = Router()
 
 // TODO move callback to controller
 
-router.post('/', (req, res) => {
+router.post('/',accountValidator, (req, res) => {
     const accountController = new AccountController()
     accountController.createAccount(req.body)
         .then((account) => {
             res.status(201).json(account)
-        }).catch((error) => {
-            res.status(500).json({ message: error.message })
         })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id',paramIdValidator, (req, res) => {
     const accountController = new AccountController()
     accountController.findAccount({ _id: req.params.id })
         .then((account) => {
@@ -25,7 +25,7 @@ router.get('/:id', (req, res) => {
         })
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id',paramIdValidator, (req, res) => {
     const accountController = new AccountController()
     accountController.updateAccount({ _id: req.params.id }, req.body)
         .then((account) => {
@@ -36,7 +36,7 @@ router.put('/:id', (req, res) => {
 })
 
 // TODO move to its own router
-router.post('/tracker/:id', (req, res) => {
+router.post('/tracker/:id',paramIdValidator, (req, res) => {
     const accountController = new AccountController()
     accountController.createTracker({ _id: req.params.id }, req.body)
         .then((account) => {
@@ -46,7 +46,7 @@ router.post('/tracker/:id', (req, res) => {
         })
 })
 // TODO move to its own router
-router.put('/tracker/:id', (req, res) => {
+router.put('/tracker/:id',paramIdValidator, (req, res) => {
     const accountController = new AccountController()
     accountController.updateTracker({ _id: req.params.id }, req.query.name as string, req.body.data)
         .then((account) => {
@@ -57,7 +57,7 @@ router.put('/tracker/:id', (req, res) => {
 })
 
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id',paramIdValidator, (req, res) => {
     const accountController = new AccountController()
     accountController.deleteAccount({ _id: req.params.id })
         .then((account) => {
