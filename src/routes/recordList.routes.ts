@@ -1,5 +1,6 @@
 import { Router } from 'express'
 import { RecordListController } from '../controllers/record.controller'
+import { paramIdValidator } from '../middlewares/validator'
 
 const router = Router()
 
@@ -15,7 +16,7 @@ router.post('/', (req, res) => {
         })
 })
 
-router.get('/:id', (req, res) => {
+router.get('/:id', paramIdValidator, (req, res) => {
     const recordListController = new RecordListController()
     recordListController.findRecord({ _id: req.params.id })
         .then((record) => {
@@ -25,7 +26,7 @@ router.get('/:id', (req, res) => {
         })
 })
 
-router.put('/:id', (req, res) => {
+router.put('/:id', paramIdValidator, (req, res) => {
     const recordListController = new RecordListController()
     recordListController.updateRecord({ _id: req.params.id }, req.body)
         .then((record) => {
@@ -35,7 +36,7 @@ router.put('/:id', (req, res) => {
         })
 })
 
-router.delete('/:id', (req, res) => {
+router.delete('/:id', paramIdValidator, (req, res) => {
     const recordListController = new RecordListController()
     recordListController.deleteRecord({ _id: req.params.id })
         .then((record) => {
@@ -45,7 +46,7 @@ router.delete('/:id', (req, res) => {
         })
 })
 //TODO: move to its own route
-router.put('/recordItem/:id', (req, res) => {
+router.put('/recordItem/:id', paramIdValidator, (req, res) => {
     const recordListController = new RecordListController()
     recordListController.insertRecord({ _id: req.params.id }, req.body)
         .then((record) => {
