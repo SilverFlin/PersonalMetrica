@@ -2,6 +2,7 @@ import { AccountDTO, TrackerDTO } from "../types"
 
 import { AccountModel, TrackerSchema } from '../models/account.model'
 import { BadRequest } from "../exceptions/Errors";
+import * as encryptor from "../auth/encryptor"
 
 interface AccountQuery {
     _id?: string;
@@ -13,8 +14,8 @@ class AccountController {
     constructor() { }
 
     async createAccount(data: AccountDTO): Promise<AccountDTO> {
+        data.password = await encryptor.encrypt(data.password);
         const newAccount = await new AccountModel(data).save();
-        // TODO encrypt password and remove from response
         return new Promise((resolve, reject) => {
             if (newAccount) {
                 resolve(newAccount);
@@ -40,8 +41,8 @@ class AccountController {
 
     }
 
-    async findAccount(query: AccountQuery): Promise<AccountDTO | null> {
-        const accountFound = await AccountModel.findOne(query, { password: 0 })
+    async findAccount(query: AccountQuery): Promise<AccountDTO> {
+        const accountFound = await AccountModel.findOne(query)
 
         return new Promise((resolve, reject) => {
             if (accountFound) {
@@ -90,24 +91,28 @@ class AccountController {
         return new Promise((resolve, reject) => {
             if (!account) {
                 reject(new Error('Account not found'))
+                return;
+            }
+            const updateTracker = account.trackers.find(e => e.name === nameTracker)
+            if (!updateTracker) {
+                reject(new Error('Tracker not found'))
+                return;
             } else {
-                const updateTracker = account.trackers.find(e => e.name === nameTracker)
-                if (!updateTracker) {
-                    reject(new Error('Tracker not found'))
-                }
-                if (updateTracker)
-                    updateTracker.name = data.name
-                if (data.recordId) {
-                    
-                    updateTracker?.recordId = data.recordId
-                }
+                updateTracker.name = data.name
+            }
 
-                account.save().then((account) => {
+            if (data.recordId) {
+                updateTracker.recordId = data.recordId
+            }
+
+            account.save()
+                .then((account) => {
                     resolve(account)
-                }).catch((error) => {
+                })
+                .catch((error) => {
                     reject(error)
                 })
-            }
+
         })
 
     }
@@ -124,12 +129,27 @@ class AccountController {
                     reject(new Error('Tracker not found'))
                 }
                 account.trackers = updateTracker
-                account.save().then((account) => {
-                    resolve(account)
-                }).catch((error) => {
-                    reject(error)
-                })
+                account.save()
+                    .then((account) => {
+                        resolve(account)
+                    }).catch((error) => {
+                        reject(error)
+                    })
             }
+        })
+    }
+
+    checkAccountPassword(passwordAttempt: string, account: AccountDTO): Promise<boolean> {
+
+        return new Promise(async (resolve, reject) => {
+            // TODO compare password
+            const foundAccount = await this.findAccount({ email: account.email })
+            if (!foundAccount) {
+                reject(false)
+            }
+            const isValid = await encryptor.compare(passwordAttempt, foundAccount.password)
+
+            resolve(isValid)
         })
     }
 

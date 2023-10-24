@@ -9,6 +9,7 @@ mongoose.connection.on("open", () => {
 
 mongoose.connection.on("error", (err) => {
     console.log("Database error", err);
+    process.exit(1);
 });
 
 
