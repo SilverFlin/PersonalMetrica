@@ -32,7 +32,6 @@ router.post('/login', async (req, res) => {
     }
 
     const isValidPassword = await accountController.checkAccountPassword(password, account)
-    console.log(isValidPassword)
     if (isValidPassword) {
         const token = jwt.sign(
             { id: account.id },

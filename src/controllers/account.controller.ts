@@ -142,7 +142,6 @@ class AccountController {
     checkAccountPassword(passwordAttempt: string, account: AccountDTO): Promise<boolean> {
 
         return new Promise(async (resolve, reject) => {
-            // TODO compare password
             const foundAccount = await this.findAccount({ email: account.email })
             if (!foundAccount) {
                 reject(false)
