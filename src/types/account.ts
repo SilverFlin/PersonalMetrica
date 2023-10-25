@@ -9,6 +9,7 @@ interface TrackerDTO {
 }
 
 interface AccountDTO {
+    id?: Types.ObjectId,
     email: string;
     password: string;
     trackers: TrackerDTO[];
