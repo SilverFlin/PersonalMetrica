@@ -49,7 +49,7 @@ router.post('/tracker/:id', isAuthenticated, paramIdValidator, (req, res) => {
 // TODO move to its own router
 router.put('/tracker/:id', isAuthenticated, paramIdValidator, (req, res) => {
     const accountController = new AccountController()
-    accountController.updateTracker({ _id: req.params.id }, req.query.name as string, req.body.data)
+    accountController.updateTracker({ _id: req.params.id }, req.query.name as string, req.body)
         .then((account) => {
             res.status(200).json(account)
         }).catch((error) => {
