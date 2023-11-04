@@ -13,6 +13,8 @@ interface AccountDTO {
     email: string;
     password: string;
     trackers: TrackerDTO[];
+    url_img?: string;
+    readonly cratedAt: Date;
 }
 
 export {

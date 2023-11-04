@@ -98,7 +98,7 @@ class AccountController {
                 reject(new Error('Tracker not found'))
                 return;
             } else {
-                updateTracker.name = data.name
+                updateTracker.name!=undefined ? updateTracker.name= data.name:''///<-bad practice
             }
 
             if (data.recordId) {
