@@ -1,0 +1,166 @@
+
+
+.select-type {
+    -moz-user-select: none;
+    user-select: none;
+    position: relative;
+    width: 180px;
+    height: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border: 2px solid val(--primary-color);
+    border-radius: 5px;
+    transition: all 0.1s ease-in-out;
+    cursor: pointer;
+    box-sizing: border-box;
+    background-color: var(--primary-background);
+  
+  }
+  
+  .select-type:hover {
+    background-color: azure;
+  }
+  
+  ul.select-menu {
+    position: absolute;
+    list-style: none;
+    width: 100%;
+    padding: 3px;
+    border-radius: 4px;
+    top: 35px;
+    display: none;
+    transition: all 0.3s ease-in-out;
+    z-index: 99999;
+    cursor: pointer;
+  }
+  
+  li.select-item {
+    width: 100%;
+    height: 30px;
+    padding: 3px 0px;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-bottom: 1px solid #d7d7d7;
+  
+  }
+  
+  li.select-item:hover {
+    background-color: azure;
+    border-radius: 3px;
+  }
+  
+  .option-type {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  
+  .option-type,
+  span {
+    height: 100%;
+    display: flex;
+    align-items: center;
+  }
+  
+  .option-icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 7px;
+    background-color: var(--primary-color);
+    margin: 0px 5px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  
+  }
+  
+  .option-icon svg {
+    fill: var(--primary-fill-color);
+  }
+  
+  .arrow {
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    margin-right: 5px;
+    margin-left: 5px;
+  
+  }
+  
+  .arrow svg {
+    fill: var(--primary-color);
+  }
+  
+  .option-text {
+    width: 90px;
+  }
+  
+  /**
+  
+  
+  **/
+  
+  .select-type.active .select-menu {
+    opacity: 1;
+    display: block;
+    background-color: var(--primary-background);
+  }
+  
+  .option-type>.select-value {
+    opacity: 0;
+    position: absolute;
+  }
+  
+  /**
+  **/
+  .form-tracker {
+    display: flex;
+    align-items: center;
+    background-color: var(--input-brackground);
+    border-radius: 5px;
+    padding: 5px;
+    width: 600px;
+    height: 40px;
+  
+  }
+  
+  .text-input {
+    resize: none;
+    width: 100%;
+    padding: 10px;
+    display: flex;
+    outline: none;
+    border: none;
+    background-color: var(--input-brackground)
+  }
+  
+  .text-input:focus {
+    outline: none;
+    border: none;
+  }
+
+  .btn-primary{
+    
+	width: 150px;
+	height: 30px;
+    border: none;
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    border-radius: 3px;
+    cursor: pointer;
+  }
+
+  .btn-primary:hover{
+    background-color: #1ed183;
+  }
+
+  
