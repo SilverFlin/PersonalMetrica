@@ -1,56 +1,16 @@
-import createTracker, { setupSelect } from './components/createTracker';
-import selectChart from './components/selectChart';
+import createTracker from './components/mytrackers/createTracker.component';
 import './style.css'
 import './selector.css'
+import darkModeChange,{setupTheme} from './components/buttonDark.component';
+import { myTrackersComponent } from './components/mytrackers/myTrackers.component';
+import createView from './components/mytrackers/tracker.view';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-<!-- USAGE -->
-${createTracker()}
-<br>
-${selectChart()}
-`
-
-// test 
-const input = document.querySelector<HTMLTextAreaElement>('.text-input')
-const button = document.querySelector<HTMLButtonElement>('#btn-create-tracker')
-button!.addEventListener('click', () => {
-
-  //TODO: implement same functionality as enter input
-});
-input!.addEventListener('keypress', (e) => {
-
-  if (e.key === 'Enter') {
-    e.preventDefault()
-    const typeTracker = document.querySelector<HTMLInputElement>('.select-value');
-    const body = {
-      name: input!.value,
-      typeTracker: typeTracker!.value
-    }
-    console.log(JSON.stringify(body))
-    //TODO:: fetch
-    fetch("http://localhost:3000/account/tracker/6545805733a99e070b50b1c6", {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-auth-token': '<token>'
-      },
-      body: JSON.stringify(body)
-    })
-      .then(res => {
-        if (res.ok) {
-          input!.value = ""
-          return res.json()
-        }
-        throw new Error("Error")
-
-      })
-      .then(res => console.log(res))
-      .catch(err => alert(err.message))
-  }
-});
+document.body.appendChild(darkModeChange());
+const app=document.querySelector<HTMLDivElement>('#app')!
 
 
+const trackers = createView(app)
+createTracker(trackers);
+myTrackersComponent(trackers, [{ name: 'Tracker 1' }, { name: 'Tracker 2' },{ name: 'Tracker 3' }]);
 
-//setup selects
-setupSelect(document.querySelector<HTMLDivElement>('#select-type-tracker')!)
-setupSelect(document.querySelector<HTMLDivElement>('#select-type-graphic')!)
+setupTheme()

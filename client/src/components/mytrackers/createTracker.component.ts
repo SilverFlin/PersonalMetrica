@@ -1,24 +1,9 @@
-export function setupSelect(element: HTMLDivElement) {
-
-    const selected = element.querySelector<HTMLDivElement>('.option-type')
-    const items = element.querySelectorAll('.select-item')
-
-    element.addEventListener('click', () => {
-        element.classList.toggle('active')
-    });
 
 
-    items.forEach(item => {
-        item.addEventListener('click', () => {
-            selected!.innerHTML = `<input class="select-value" type="radio" value="${item.getAttribute('value')}" checked>` + item.innerHTML
 
-        })
-    })
-}
+export default function createTrackerComponent(nodeParent: HTMLElement) {
 
-
-export default function createTracker() {
-    return `
+    nodeParent.innerHTML = `
     <form  id="createTracker">
     <div class="form-tracker"  tabindex="0">
     
@@ -68,4 +53,86 @@ export default function createTracker() {
     <button class="btn-primary" id="btn-create-tracker">create</button>
     </div>
     </form>`
-}  
+    //setup selects
+    setupSelect(nodeParent.querySelector<HTMLDivElement>('#select-type-tracker')!)
+    handleEvents(nodeParent.querySelector<HTMLDivElement>('#createTracker')!)
+}
+
+export function setupSelect(element: HTMLDivElement) {
+    const selected = element.querySelector<HTMLDivElement>('.option-type')
+    const items = element.querySelectorAll('.select-item')
+    element.addEventListener('click', () => {
+        element.classList.toggle('active')
+    });
+
+    items.forEach(item => {
+        item.addEventListener('click', () => {
+            selected!.innerHTML = `<input class="select-value" type="radio" value="${item.getAttribute('value')}" checked>` + item.innerHTML
+
+        })
+    })
+}
+
+function handleEvents(nodeParent: HTMLElement) {
+    // test 
+    const input = nodeParent.querySelector<HTMLTextAreaElement>('.text-input')
+    const button = nodeParent.querySelector<HTMLButtonElement>('#btn-create-tracker')
+
+    button!.addEventListener('click', () => {
+        const typeTracker = nodeParent.querySelector<HTMLInputElement>('.select-value');
+
+        const body = {
+            name: input!.value,
+            typeTracker: typeTracker!.value
+        }
+        createTracker(body)
+        input!.value = ''
+    });
+    input!.addEventListener('keypress', (e) => {
+        const typeTracker = nodeParent.querySelector<HTMLInputElement>('.select-value');
+
+
+        if (e.key === 'Enter') {
+            e.preventDefault()
+            const body = {
+                name: input!.value,
+                typeTracker: typeTracker!.value
+            }
+            createTracker(body)
+            input!.value = ''
+        }
+
+    });
+
+}
+
+function createTracker(body: any) {
+
+
+    console.log(JSON.stringify(body))
+    fetch("http://localhost:3000/account/tracker/id????", {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': '<token>'
+        },
+        body: JSON.stringify(body)
+    })
+        .then(res => {
+            if (res.ok) {
+                return res.json()
+            }
+
+            throw new Error("Error")
+        })
+        .then(res => console.log(res))
+        .catch(err => alert(err.message))
+}
+
+
+/***Example
+ * const trackers = createView(app)
+ * createTracker(trackers); 
+ * myTrackersComponent(trackers, [{ name: 'Tracker 1' }, { name: 'Tracker 2' },{ name: 'Tracker 3' }]);
+ * setupTheme()
+ */

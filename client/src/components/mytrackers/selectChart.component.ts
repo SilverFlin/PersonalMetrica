@@ -1,5 +1,13 @@
-export default function () {
-    return `<div class="select-type" id="select-type-graphic" role="select">
+import { setupSelect } from "./createTracker.component";
+
+export default function createSelect (nodeParent:HTMLElement, data?:any) {
+    // initialize select component
+    const selectType =document.createElement('div');  
+    selectType.classList.add('select-type');
+    selectType.id=data.idHTMLElement;
+    selectType.role='select';
+    nodeParent.appendChild(selectType);
+    selectType.innerHTML=`
     <div class="option-type-selected">
         <div class="option-type" value="none">
             <div class="option-icon"><svg height="25" viewBox="0 0 19 30" fill="none"
@@ -30,12 +38,15 @@ export default function () {
         </li>
         <li class="select-item" value="lineChart">
             <div class="option-icon"><svg width="22" height="20" viewBox="0 0 22 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <path d="M15.3995 9.75556L20.0635 1.61111L21.9665 2.72222L16.2135 12.7778L9.05251 8.61111L3.80551 17.7778H21.9995V20H-0.000488281V0H2.19951V16.1556L8.24951 5.55556L15.3995 9.75556Z" fill="#686B6F"/>
+            <path d="M15.3995 9.75556L20.0635 1.61111L21.9665 2.72222L16.2135 12.7778L9.05251 8.61111L3.80551 17.7778H21.9995V20H-0.000488281V0H2.19951V16.1556L8.24951 5.55556L15.3995 9.75556Z" />
             </svg>
             </div>
             <div class="option-text"> <span>Line Chart</span></div>
 
         </li>
-    </ul>
-</div>`
+    </ul>  
+`
+
+    setupSelect(selectType)
+
 }

@@ -1,9 +1,200 @@
 * {
-  --primary-color: #19ff9b;
-  --primary-background: #f1f1f1;
-  --input-brackground: #e2e2e2;
-  --primary-fill-color: #808080;
+
   margin: 0;
   padding: 0;
+  box-sizing: border-box;
 }
 
+body {
+  --primary-color: #19ff9b;
+  --primary-background: #e2ebe2;
+  --input-brackground: #c6c6c6;
+  --primary-fill-color: #595959;
+  --primary-hover: azure;
+  color: var(--primary-fill-color);
+  background-color: var(--primary-background);
+}
+
+input:focus {
+  outline: none;
+}
+
+body.dark {
+  --primary-color: #09797f;
+  --primary-background: rgb(49, 49, 57);
+  --input-brackground: rgb(59, 59, 73);
+  --primary-fill-color: #dfdfdf;
+  --primary-hover: rgb(59, 64, 74);
+  color: white;
+}
+
+#app {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+}
+
+/**
+  My Trackers styles
+**/
+.my-trackers {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 750px;
+  margin: 10px auto;
+  box-sizing: border-box;
+}
+
+.my-trackers-header {
+  width: 100%;
+  height: 50px;
+  padding: 0px 10px;
+
+}
+
+
+.tracker {
+  width: 100%;
+  padding: 5px;
+
+}
+
+.my-trackers-body {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+
+}
+
+.tracker-item {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 10px 0px;
+  margin-top: 5px;
+  padding-bottom: 5px;
+  border-bottom: 1px solid var(--primary-fill-color);
+}
+
+.tracker-item-header {
+  width: 100%;
+  height: 50px;
+  padding: 0px 10px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  fill: var(--primary-fill-color);
+  stroke: var(--primary-fill-color);
+}
+
+.tracker-item-body {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tracker-item-body {
+  width: 100%;
+  height: 300px;
+  display: flex;
+  margin: 5px 0px;
+  align-items: center;
+}
+
+.tracker-chart {
+  border-radius: 3px;
+  border: 1px solid  var(--primary-fill-color);
+  width: 100%;
+  height: 100%;
+
+}
+
+.tracker-item-footer {
+  width: 100%;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.btn-primary {
+
+  width: 150px;
+  height: 30px;
+  border: none;
+  background-color: var(--primary-color);
+  color: white;
+  font-weight: bold;
+  border-radius: 3px;
+  cursor: pointer;
+}
+
+.btn-primary:hover {
+  background-color: #1ed183;
+}
+
+.tracker-item-footer .btn-primary {
+  width: 100%;
+  height: 100%;
+}
+
+
+.edit-tracker {
+  position: absolute;
+  top: 0px;
+  left: -2px;
+  display: none;
+}
+
+.edit-tracker.active {
+  display: block;
+  z-index: 9999;
+
+}
+
+.edit-tracker .text-input {
+  height: 30px;
+  border: none;
+  padding: 3px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.edit-tracker .text-input:focus{
+  border: 2px solid var(--primary-color) ;
+}
+
+.edit-item {
+  position: relative;
+
+}
+
+.btn-dark-mode {
+  position: fixed;
+  top: 10%;
+  right: 2%;
+}
+
+button {
+  background: none;
+  outline: none;
+  border: none;
+  cursor: pointer;
+}
+
+.edit-item h4 {
+  cursor: pointer;
+  user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+}
+
+.edit-item:hover h4 {
+  text-decoration: underline;
+}
