@@ -3,6 +3,7 @@ import { AccountDTO, TrackerDTO } from "../types"
 import { AccountModel, TrackerSchema } from '../models/account.model'
 import { BadRequest } from "../exceptions/Errors";
 import * as encryptor from "../auth/encryptor"
+import {  Types } from "mongoose";
 
 interface AccountQuery {
     _id?: string;
@@ -83,24 +84,25 @@ class AccountController {
         })
     }
 
-    //FIXME: validate data 
-    async updateTracker(query: AccountQuery, nameTracker: string, data: TrackerDTO): Promise<AccountDTO | null> {
+    async updateTracker(query: AccountQuery, idTracker: string, data: TrackerDTO): Promise<AccountDTO | null> {
 
         const account = await AccountModel.findOne(query);
-
         return new Promise((resolve, reject) => {
             if (!account) {
                 reject(new Error('Account not found'))
                 return;
             }
-            const updateTracker = account.trackers.find(e => e.name === nameTracker)
+            const updateTracker = account.trackers.find(e =>
+                e._id?.equals(new Types.ObjectId(idTracker))
+            );
             if (!updateTracker) {
                 reject(new Error('Tracker not found'))
                 return;
-            } else {
-                updateTracker.name!=undefined ? updateTracker.name= data.name:''///<-bad practice
-            }
+            } 
 
+            if (data.name) {
+                updateTracker.name = data.name
+            }
             if (data.recordId) {
                 updateTracker.recordId = data.recordId
             }

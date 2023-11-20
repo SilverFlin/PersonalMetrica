@@ -1,24 +1,16 @@
+import createTracker from './components/mytrackers/createTracker.component';
 import './style.css'
-import typescriptLogo from './typescript.svg'
-import viteLogo from '/vite.svg'
-import { setupCounter } from './counter.ts'
+import './selector.css'
+import darkModeChange,{setupTheme} from './components/buttonDark.component';
+import { myTrackersComponent } from './components/mytrackers/myTrackers.component';
+import createView from './components/mytrackers/tracker.view';
 
-document.querySelector<HTMLDivElement>('#app')!.innerHTML = `
-  <div>
-    <a href="https://vitejs.dev" target="_blank">
-      <img src="${viteLogo}" class="logo" alt="Vite logo" />
-    </a>
-    <a href="https://www.typescriptlang.org/" target="_blank">
-      <img src="${typescriptLogo}" class="logo vanilla" alt="TypeScript logo" />
-    </a>
-    <h1>Vite + TypeScript</h1>
-    <div class="card">
-      <button id="counter" type="button"></button>
-    </div>
-    <p class="read-the-docs">
-      Click on the Vite and TypeScript logos to learn more
-    </p>
-  </div>
-`
+document.body.appendChild(darkModeChange());
+const app=document.querySelector<HTMLDivElement>('#app')!
 
-setupCounter(document.querySelector<HTMLButtonElement>('#counter')!)
+
+const trackers = createView(app)
+createTracker(trackers);
+myTrackersComponent(trackers, [{ name: 'Tracker 1' }, { name: 'Tracker 2' },{ name: 'Tracker 3' }]);
+
+setupTheme()
