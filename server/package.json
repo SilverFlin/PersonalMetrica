@@ -26,6 +26,7 @@
   "homepage": "https://github.com/SilverFlin/PersonalMetrica#readme",
   "dependencies": {
     "@types/bcrypt": "^5.0.1",
+    "11_personalmetrica": "file:..",
     "bcrypt": "^5.1.1",
     "dotenv": "^16.3.1",
     "express": "^4.18.2",
