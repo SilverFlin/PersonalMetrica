@@ -36,20 +36,20 @@ router.put('/:id', isAuthenticated, paramIdValidator, (req, res) => {
         })
 })
 
-// TODO move to its own router
-router.post('/tracker/:id', isAuthenticated, paramIdValidator, (req, res) => {
+// TODO move to its own router,  the user id get on token
+router.post('/tracker', isAuthenticated,  (req, res) => {
     const accountController = new AccountController()
-    accountController.createTracker({ _id: req.params.id }, req.body)
+    accountController.createTracker({ _id: req.user.id }, req.body)
         .then((account) => {
             res.status(200).json(account)
         }).catch((error) => {
             res.status(500).json({ message: error.message })
         })
 })
-// TODO move to its own router
-router.put('/tracker/:id', isAuthenticated, paramIdValidator, (req, res) => {
-    const accountController = new AccountController()
-    accountController.updateTracker({ _id: req.params.id }, req.query.name as string, req.body)
+// TODO the param id should be the tracker id, the user id get on token
+router.put('/tracker/:id', isAuthenticated,paramIdValidator,  (req, res) => {
+    const accountController = new AccountController() 
+    accountController.updateTracker({ _id: req.user.id }, req.params.id as string, req.body)
         .then((account) => {
             res.status(200).json(account)
         }).catch((error) => {
