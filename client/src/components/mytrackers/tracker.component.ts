@@ -1,3 +1,4 @@
+import { httpEditTracker as editTracker } from "../../hooks/requests";
 import createSelect from "./selectChart.component";
 
 
@@ -78,7 +79,7 @@ function editItemTrackerComponent(nodeParent: HTMLElement, data: any): HTMLEleme
                 </svg>
             </h4>
             <div class='edit-tracker'>
-                <input class='text-input' type="text" value="${data.name}">
+                <input class='text-input' type='text' value="${data.name}" aria-value="${data._id}">
             </div>
     `
 
@@ -117,15 +118,16 @@ function handleEventsInput(input: HTMLInputElement, nodeParent: HTMLElement) {
     // listener to update name on tracker item
     input.addEventListener('change', () => {
 
-        hideInput(nodeParent);
-        console.log("fetch... update")
+        hideInput(nodeParent)
+
     })
     // listener to update name on tracker item
     input.addEventListener('keypress', (e) => {
 
         if (e!.key === 'Enter') {
             hideInput(nodeParent);
-
+            editTracker(input.getAttribute('aria-value')!, { name: input.value })
+                .then(e => input.value = e.name)
         }
     })
     // listener to hide edit name tracker input

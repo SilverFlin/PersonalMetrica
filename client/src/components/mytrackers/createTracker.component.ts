@@ -1,8 +1,10 @@
+import { httpCreateTracker as createTracker, httpGetTrackers as getTrackers } from "../../hooks/requests";
+import { myTrackersComponent } from "./myTrackers.component";
 
 
 
-export default function createTrackerComponent(nodeParent: HTMLElement) {
-
+export default function createTrackerComponent() {
+   const nodeParent =document.getElementById('mytrackers')!;
     nodeParent.innerHTML = `
     <form  id="createTracker">
     <div class="form-tracker"  tabindex="0">
@@ -56,6 +58,11 @@ export default function createTrackerComponent(nodeParent: HTMLElement) {
     //setup selects
     setupSelect(nodeParent.querySelector<HTMLDivElement>('#select-type-tracker')!)
     handleEvents(nodeParent.querySelector<HTMLDivElement>('#createTracker')!)
+    
+    // fetch to get trackers from server
+    getTrackers().then(e => {
+        myTrackersComponent(nodeParent, e);
+    })
 }
 
 export function setupSelect(element: HTMLDivElement) {
@@ -106,28 +113,6 @@ function handleEvents(nodeParent: HTMLElement) {
 
 }
 
-function createTracker(body: any) {
-
-
-    console.log(JSON.stringify(body))
-    fetch("http://localhost:3000/account/tracker/id????", {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'x-auth-token': '<token>'
-        },
-        body: JSON.stringify(body)
-    })
-        .then(res => {
-            if (res.ok) {
-                return res.json()
-            }
-
-            throw new Error("Error")
-        })
-        .then(res => console.log(res))
-        .catch(err => alert(err.message))
-}
 
 
 /***Example
