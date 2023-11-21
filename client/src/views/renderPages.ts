@@ -1,17 +1,19 @@
 import { getLandingPageNavbar } from "../components/navbar.component"
+import getLandingPage from "./LandingPage"
+import getLoginPage from "./LoginPage"
 
 // TODO ver como poner el navbar en todas las paginas sin tener que copiar y pegar el codigo
 function renderLandingPage() {
     return `
     ${getLandingPageNavbar()}
-    <p>landing page</p>
+    ${getLandingPage()}
     `
 }
 
 function renderLoginPage() {
     return `
-   ${getLandingPageNavbar()}
-   <p>login page</p>`
+   ${getLoginPage()}
+   `
 }
 
 function renderRegisterPage() {
