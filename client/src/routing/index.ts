@@ -1,3 +1,4 @@
+import { getLandingPageNavbar } from "../components/navbar.component";
 import { bindLandingPage } from "../views/LandingPage";
 import { bindLoginPage } from "../views/LoginPage";
 import { bindRegisterPage } from "../views/RegisterPage";
@@ -86,9 +87,17 @@ const locationHandler = async () => {
     }
 
     const html = route.template
-
+    
     // TODO cambiar?
-    document.getElementById("app")!.innerHTML = html;
+   const app= document.getElementById("app")!; 
+   // 
+   if(route.title!='Login'&&route.title!='Register'){
+       app.innerHTML = getLandingPageNavbar();
+       app.innerHTML += html;
+   }else{
+       app.innerHTML = html;
+   }
+    
 
     await route.bindElements?.();
 
