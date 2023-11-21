@@ -8,6 +8,7 @@ type Route = {
     description: string;
     template: string;
     bindElements?: () => void;
+    isProtected?: boolean;
 }
 
 type Routes = {
@@ -40,12 +41,14 @@ const routes: Routes = {
     dashboard: {
         title: "Dashboard",
         description: "Dashboard page",
-        template: renderDashboardPage()
+        template: renderDashboardPage(),
+        isProtected: true
     },
     profile: {
         title: "Profile",
         description: "Profile page",
-        template: renderProfilePage()
+        template: renderProfilePage(),
+        isProtected: true
     }
 }
 
@@ -61,6 +64,16 @@ const locationHandler = async () => {
     }
 
     const route = routes[location as keyof typeof routes]
+    if (route.isProtected) {
+        // TODO check if user is logged in
+        const token = sessionStorage.getItem("token");
+
+        if (!token) {
+            alert("You must be logged in to access this page");
+            window.location.hash = "#login";
+            return;
+        }
+    }
 
     const html = route.template
 
