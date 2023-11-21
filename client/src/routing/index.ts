@@ -1,4 +1,5 @@
 import { bindLoginPage } from "../views/LoginPage";
+import { bindRegisterPage } from "../views/RegisterPage";
 import { renderDashboardPage, renderLandingPage, renderLoginPage, renderProfilePage, renderRegisterPage } from "../views/renderPages";
 
 
@@ -33,7 +34,8 @@ const routes: Routes = {
     register: {
         title: "Register",
         description: "Register page",
-        template: renderRegisterPage()
+        template: renderRegisterPage(),
+        bindElements: bindRegisterPage
     },
     dashboard: {
         title: "Dashboard",
