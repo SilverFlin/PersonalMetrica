@@ -6,10 +6,12 @@ import { errorHandler } from '../middlewares/errorHandler';
 import { BadRequest } from '../exceptions/Errors';
 import { accountValidator } from '../middlewares/validator';
 import path from 'path';
+import cors from 'cors';
 
 const app = express();
 
 app.use(express.json());
+app.use(cors())
 app.use(express.static(path.join(__dirname, "../../public")));
 
 
