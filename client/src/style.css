@@ -183,12 +183,21 @@ button {
 }
 
 .edit-item h4 {
+  display: flex;
   cursor: pointer;
   user-select: none;
   -moz-user-select: none;
   -webkit-user-select: none;
 }
 
+
 .edit-item:hover h4 {
   text-decoration: underline;
+}
+.edit-item h4 > svg {
+  opacity: 0;
+}
+
+.edit-item:hover h4 >svg{
+  opacity: 1;
 }

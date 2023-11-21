@@ -79,7 +79,7 @@ function editItemTrackerComponent(nodeParent: HTMLElement, data: any): HTMLEleme
                 </svg>
             </h4>
             <div class='edit-tracker'>
-                <input class='text-input' type='text' value=${data.name} aria-value="${data._id}">
+                <input class='text-input' type='text' value="${data.name}" aria-value="${data._id}">
             </div>
     `
 
