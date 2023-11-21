@@ -6,6 +6,7 @@ function getLandingPageNavbar() {
             <a href="#register"> Register </a>
             <a href="#dashboard"> Dashboard </a>
             <a href="#profile"> Profile </a>
+            <a href="#trackers"> trackers </a>
         </nav>
     `;
 }

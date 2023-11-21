@@ -1,7 +1,8 @@
 import { bindLandingPage } from "../views/LandingPage";
 import { bindLoginPage } from "../views/LoginPage";
 import { bindRegisterPage } from "../views/RegisterPage";
-import { renderDashboardPage, renderLandingPage, renderLoginPage, renderProfilePage, renderRegisterPage } from "../views/renderPages";
+import { bindTrackerPage } from "../views/TrackerPage";
+import { renderDashboardPage, renderLandingPage, renderLoginPage, renderProfilePage, renderRegisterPage, renderTrackerPage } from "../views/renderPages";
 
 
 type Route = {
@@ -51,6 +52,13 @@ const routes: Routes = {
         description: "Profile page",
         template: renderProfilePage(),
         isProtected: true
+    },
+    trackers:{
+        title: "Trackers",
+        description: "Trackers page",
+        template: renderTrackerPage(),
+        bindElements: bindTrackerPage,
+        //isProtected: true
     }
 }
 

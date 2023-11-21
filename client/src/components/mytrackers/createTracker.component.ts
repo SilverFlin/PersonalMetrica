@@ -3,8 +3,8 @@ import { myTrackersComponent } from "./myTrackers.component";
 
 
 
-export default function createTrackerComponent(nodeParent: HTMLElement) {
-
+export default function createTrackerComponent() {
+   const nodeParent =document.getElementById('mytrackers')!;
     nodeParent.innerHTML = `
     <form  id="createTracker">
     <div class="form-tracker"  tabindex="0">
