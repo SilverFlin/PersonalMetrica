@@ -6,7 +6,7 @@ const instance = axios.create({
 })
 
 
-async function httpRegisterUser(user: User) {
+async function httpRegisterUser(user: User): Promise<User> {
     const { data, status } = await instance({
         method: 'POST',
         url: '/account',
@@ -21,7 +21,23 @@ async function httpRegisterUser(user: User) {
     throw new Error('Error registering user')
 }
 
+async function httpLoginUser(user: User): Promise<string> {
+    const { data, status } = await instance({
+        method: 'POST',
+        url: '/auth/login',
+        data: user
+    })
+
+    if (status === 200 || status === 201) {
+        return data.token
+    }
+
+    // TODO handle error
+    throw new Error('Error registering user')
+}
+
 
 export {
-    httpRegisterUser
+    httpRegisterUser,
+    httpLoginUser
 }

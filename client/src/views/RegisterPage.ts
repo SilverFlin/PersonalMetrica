@@ -8,7 +8,6 @@ export function bindRegisterPage() {
     const user = await httpRegisterUser({
       email: 'test@asd.coma',
       password: '123456',
-      username: 'test'
     })
     if (user) {
       // TODO show success message

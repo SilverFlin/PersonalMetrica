@@ -1,11 +1,21 @@
+import { httpLoginUser } from "../hooks/requests";
+
 export function bindLoginPage() {
-    document.getElementById('btn-login')?.addEventListener('click', () => {
-        console.log('login');
-    });
+  document.getElementById('btn-login')?.addEventListener('click', async () => {
+    const token = await httpLoginUser({
+      email: 'toledorusso@outlook.com',
+      password: 'test'
+    })
+    if (token) {
+      // TODO redirect to dashboard
+      // TODO Store token in local storage
+      window.location.hash = "#";
+    }
+  });
 }
 
 export default function getLoginPage() {
-    return `
+  return `
         <div
       class="flex w-full h-screen shrink-0 align-center justify-center gap-11"
     >
