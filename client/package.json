@@ -8,7 +8,16 @@
     "build": "tsc && vite build --outDir=../server/public --emptyOutDir"
   },
   "devDependencies": {
+    "@types/jsonwebtoken": "^9.0.5",
+    "11_personalmetrica": "file:..",
+    "autoprefixer": "^10.4.16",
+    "postcss": "^8.4.31",
+    "tailwindcss": "^3.3.5",
     "typescript": "^5.0.2",
     "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "axios": "^1.6.2",
+    "jsonwebtoken": "^9.0.2"
   }
 }
