@@ -1,3 +1,4 @@
+import { bindLandingPage } from "../views/LandingPage";
 import { bindLoginPage } from "../views/LoginPage";
 import { bindRegisterPage } from "../views/RegisterPage";
 import { renderDashboardPage, renderLandingPage, renderLoginPage, renderProfilePage, renderRegisterPage } from "../views/renderPages";
@@ -24,7 +25,8 @@ const routes: Routes = {
     '/': {
         title: "Landing",
         description: "Landing page",
-        template: renderLandingPage()
+        template: renderLandingPage(),
+        bindElements: bindLandingPage
     },
     login: {
         title: "Login",
@@ -80,7 +82,7 @@ const locationHandler = async () => {
     // TODO cambiar?
     document.getElementById("app")!.innerHTML = html;
 
-    route.bindElements?.();
+    await route.bindElements?.();
 
     document.title = route.title;
 };

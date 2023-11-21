@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { MyJwtPayload, decodeToken } from '../utils/jwt'
 
 const instance = axios.create({
     baseURL: 'http://localhost:3000',
@@ -36,8 +37,35 @@ async function httpLoginUser(user: User): Promise<string> {
     throw new Error('Error registering user')
 }
 
+async function httpGetUserFromToken(token: string): Promise<User | null> {
+
+    console.log('token', token)
+    let myJwtPayload: MyJwtPayload | null;
+    try {
+        myJwtPayload = await decodeToken(token)
+    } catch (e) {
+        console.log(e)
+        return null
+    }
+
+    console.log(myJwtPayload)
+
+    const { data, status } = await instance({
+        method: 'GET',
+        url: `/account/`
+    })
+
+    if (status === 200 || status === 201) {
+        return data
+    }
+
+    return null
+
+}
+
 
 export {
     httpRegisterUser,
-    httpLoginUser
+    httpLoginUser,
+    httpGetUserFromToken
 }
