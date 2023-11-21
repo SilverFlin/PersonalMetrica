@@ -1,4 +1,4 @@
-import { createTracker, getTrackers } from "../../services/tracker.service";
+import { httpCreateTracker as createTracker, httpGetTrackers as getTrackers } from "../../hooks/requests";
 import { myTrackersComponent } from "./myTrackers.component";
 
 

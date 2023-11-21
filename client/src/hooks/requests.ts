@@ -1,5 +1,6 @@
 import axios from 'axios'
 import { MyJwtPayload, decodeToken } from '../utils/jwt'
+import { token } from '../helpers/constants'
 
 const instance = axios.create({
     baseURL: 'http://localhost:3000',
@@ -64,8 +65,68 @@ async function httpGetUserFromToken(token: string): Promise<User | null> {
 }
 
 
+ async function httpGetTrackers() {
+    const { data } = await instance({
+        method: 'GET',
+        url: '/tracker',
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token()
+        }
+    });
+
+    return data;
+}
+
+ async function httpCreateTracker(body: any) {
+    const { data } = await instance({
+        method: 'POST',
+        url: '/tracker',
+        data: body,
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token()
+        }
+    });
+
+    return data;
+}
+
+ async function httpEditTracker(idTracker: string, body: any) {
+    const { data } = await instance({
+        method: 'PUT',
+        url: `/tracker/${idTracker}`,
+        data: body,
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token()
+        }
+    });
+
+    return data;
+}
+
+ async function httpDeleteTracker(idTracker: string) {
+    const { data } = await instance({
+        method: 'DELETE',
+        url: `/tracker/${idTracker}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token()
+        }
+    });
+
+    return data;
+}
+
+
+
 export {
     httpRegisterUser,
     httpLoginUser,
-    httpGetUserFromToken
-}
+    httpGetUserFromToken,
+    httpGetTrackers,
+    httpCreateTracker,
+    httpEditTracker,
+    httpDeleteTracker
+};

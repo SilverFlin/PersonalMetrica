@@ -1,4 +1,4 @@
-import { editTracker } from "../../services/tracker.service";
+import { httpEditTracker as editTracker } from "../../hooks/requests";
 import createSelect from "./selectChart.component";
 
 
