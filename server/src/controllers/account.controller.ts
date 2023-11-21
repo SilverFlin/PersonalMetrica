@@ -118,6 +118,18 @@ class AccountController {
         })
 
     }
+    async getTrackers(query:AccountQuery) {  
+        const account = await AccountModel.findOne(query);
+
+        return new Promise((resolve, reject) => {
+            if (!account) {
+                reject(new Error('Account not found'))
+            } else {
+                
+                resolve(account.trackers)
+            }
+        })
+    }
 
     async removeTracker(query: AccountQuery, nameTracker: string): Promise<AccountDTO | null> {
 
