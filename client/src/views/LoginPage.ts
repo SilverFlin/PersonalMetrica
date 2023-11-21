@@ -2,14 +2,37 @@ import { httpLoginUser } from "../hooks/requests";
 
 export function bindLoginPage() {
   document.getElementById('btn-login')?.addEventListener('click', async () => {
-    const token = await httpLoginUser({
-      email: 'toledorusso@outlook.com',
-      password: 'test'
-    })
+
+
+    const email = (document.getElementById('email-login') as HTMLInputElement).value
+    const password = (document.getElementById('password-login') as HTMLInputElement).value
+
+    if (!email || !password) {
+      // TODO show error message
+      alert('Please fill all the fields')
+      return
+    }
+
+    // TODO validate form
+
+
+    let token: string | null = null;
+    try {
+      token = await httpLoginUser({ email, password })
+    } catch (error) {
+      // TODO show error message
+      alert("Something went wrong")
+    }
+
     if (token) {
       // TODO redirect to dashboard
-      // TODO Store token in local storage
-      window.location.hash = "#";
+      alert(`User ${email} logged in successfully`)
+
+      sessionStorage.setItem("token", token);
+
+      window.location.hash = "#dashboard";
+    } else {
+      alert(`User ${email} not found`)
     }
   });
 }
@@ -30,8 +53,8 @@ export default function getLoginPage() {
         <div
           class="shrink-0 rounded-sm flex w-[31.5rem] h-72 justify-center align-center gap-12 flex-col"
         >
-          <input class="bg-red-200 h-16" type="text" />
-          <input class="bg-red-200 h-16" type="text" />
+          <input id="email-login" class="bg-red-200 h-16" type="email" />
+          <input id="password-login" class="bg-red-200 h-16" type="password" />
         </div>
 
         <button
