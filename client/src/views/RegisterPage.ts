@@ -1,14 +1,27 @@
+import { httpRegisterUser } from "../hooks/requests";
+
 export function bindRegisterPage() {
-    document.getElementById('btn-register')?.addEventListener('click', () => {
-        console.log('register');
-    });
-    document.getElementById('btn-cancel-register')?.addEventListener('click', () => {
-        console.log('cancel register');
+  document.getElementById('btn-register')?.addEventListener('click', async () => {
+    // TODO validate form
+    // TODO take values from form
+    alert('Valores De Prueba')
+    const user = await httpRegisterUser({
+      email: 'test@asd.coma',
+      password: '123456',
+      username: 'test'
     })
+    if (user) {
+      // TODO show success message
+      window.location.hash = "#login";
+    }
+  });
+  document.getElementById('btn-cancel-register')?.addEventListener('click', () => {
+    window.location.hash = "#";
+  })
 }
 
 export default function getRegisterPage() {
-    return `
+  return `
     <div
       style="background-image: url('https://source.unsplash.com/random')"
       class="bg-cover flex w-full h-screen shrink-0 align-center items-center justify-center gap-11"

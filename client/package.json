@@ -8,6 +8,7 @@
     "build": "tsc && vite build --outDir=../server/public --emptyOutDir"
   },
   "devDependencies": {
+    "11_personalmetrica": "file:..",
     "autoprefixer": "^10.4.16",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
@@ -15,6 +16,6 @@
     "vite": "^4.4.5"
   },
   "dependencies": {
-    "11_personalmetrica": "file:.."
+    "axios": "^1.6.2"
   }
 }
