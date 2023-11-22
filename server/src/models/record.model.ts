@@ -10,6 +10,12 @@ const HabitRecord = new Schema({
 
     habitCompletion: {
         type: Boolean,
+        required: true,
+        default: false
+    },
+    creationTime: {
+        type: Date,
+        default: new Date(),
         required: true
     }
 })
@@ -22,6 +28,11 @@ const TimerRecord = new Schema({
     },
     durationInSeconds: {
         type: Number,
+        required: true
+    },
+    creationTime: {
+        type: Date,
+        default: new Date(),
         required: true
     }
 })
