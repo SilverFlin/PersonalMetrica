@@ -16,6 +16,17 @@ router.post('/', accountValidator, (req, res) => {
         })
 })
 
+router.get("/profile", isAuthenticated, (req, res) => {
+    const accountController = new AccountController()
+    accountController.findAccount({ _id: req.user?.id })
+        .then((account) => {
+            res.status(200).json(account)
+        }).catch((error) => {
+            res.status(500).json({ message: error.message })
+        })
+})
+
+
 router.get('/:id', paramIdValidator, (req, res) => {
     const accountController = new AccountController()
     accountController.findAccount({ _id: req.params.id })

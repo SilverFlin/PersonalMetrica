@@ -35,15 +35,15 @@ const AccountSchema = new Schema<AccountDTO>({
         type: String,
         required: true
     },
-    url_img:{
-        type:String,
+    url_img: {
+        type: String,
         default: './img/unknown.png'
     },
     trackers: [{
         type: TrackerSchema,
         required: true
     }],
-    cratedAt: {
+    createdAt: {
         type: Date,
         required: true,
         default: Date.now()
