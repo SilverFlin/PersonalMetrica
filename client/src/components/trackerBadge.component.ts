@@ -1,4 +1,4 @@
-import { Tracker } from "../views/ProfilePage";
+import { RecordList, TimerRecord, Tracker } from "../views/ProfilePage";
 
 function getHabitSvg() {
     return `<svg
@@ -32,18 +32,50 @@ function getTimerSvg() {
         d="M40.0506 21V28.2753H47.326V28.4936C34.9579 30.2397 25.5 40.9344 25.5 53.7389C25.5 67.7803 36.9223 79.2026 50.9636 79.2026C65.005 79.2026 76.4272 67.7803 76.4272 53.7389C76.4272 50.465 75.6997 47.4094 74.6084 44.6448L67.9879 47.4094C68.7882 49.5193 69.1519 51.5563 69.1519 53.8117C69.1519 63.9244 61.0763 72 50.9636 72C40.8509 72 32.7753 63.9244 32.7753 53.8117C32.7753 43.699 40.8509 35.6234 50.9636 35.6234C53.1462 35.6234 55.2561 35.9872 57.3659 36.7874L59.8395 29.9486C58.1662 29.3666 56.4201 29.0756 54.6013 28.7846V28.3481H61.8766V21.0728H40.0506V21ZM76.4272 29.4394C76.4272 29.4394 49.8723 49.883 48.49 51.2653C47.1077 52.7204 47.1077 54.8302 48.49 56.2853C49.8723 57.7404 52.0549 57.7404 53.51 56.2853C54.965 54.8302 76.5 29.4394 76.5 29.4394H76.4272Z"
         fill="#5C5C5C"
         />
-    </svg>
+        </svg>
 `
 }
 
 
-function getTrackerBadgeComponent(tracker: Tracker) {
+function createBadgeDescription(recordList: RecordList) {
+    let coreValue: number = 0;
+
+
+
+    let innerText = ''
+    if (recordList.typeRecord === 'timer') {
+        recordList.records.forEach((record) => {
+            coreValue += (record as TimerRecord).durationInSeconds;
+        })
+        coreValue = coreValue / recordList.records.length
+        coreValue = coreValue / 60
+
+
+        innerText = `avarage of <span class="inline text-[#FF5F5F]">${coreValue.toFixed(3)}</span> min`
+    } else if (recordList.typeRecord === 'habit') {
+        recordList.records.forEach((record) => {
+            // TODO get by date
+            console.log(record)
+            coreValue += 1;
+        })
+        innerText = `<span class="text-[#FF5F5F] inline">${coreValue}</span> consecutive days`
+    }
+
+
+    return innerText
+}
+
+
+function getTrackerBadgeComponent(tracker: Tracker, recordList: RecordList) {
     let svg: string = '';
     if (tracker.typeTracker === "habit") {
         svg = getHabitSvg();
     } else if (tracker.typeTracker === "timer") {
         svg = getTimerSvg();
     }
+
+
+    const description = createBadgeDescription(recordList)
 
     // TODO add dynamic description
 
@@ -60,10 +92,11 @@ function getTrackerBadgeComponent(tracker: Tracker) {
               >
                 ${tracker.name}
               </h1>
+
               <p
                 class="w-[8.3rem] h-[1.25rem] text-xs text-center font-semibold lowercase"
               >
-                <span class="text-[#FF5F5F] inline">10</span> consecutive days
+              ${description}
               </p>
             </div>`
 
@@ -102,3 +135,4 @@ function getTrackerBadgeComponent(tracker: Tracker) {
 //             </div>
 
 export default getTrackerBadgeComponent;
+
