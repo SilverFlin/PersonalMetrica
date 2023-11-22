@@ -65,12 +65,12 @@ class RecordListController {
                 reject(new Error('RecordList not found!'))
             } else {
                 if (record.typeRecord === 'timer') {
-                    const timerRecord: TimerRecordDTO = { durationInSeconds: data.durationInSeconds }
+                    const timerRecord: TimerRecordDTO = { durationInSeconds: data.durationInSeconds, creationTime: new Date() }
                     record.records.push(timerRecord)
 
                 }
                 if (record.typeRecord === 'habit') {
-                    const habitRecord: HabitRecordDTO = { habitCompletion: data.habitCompletion }
+                    const habitRecord: HabitRecordDTO = { habitCompletion: data.habitCompletion, creationTime: new Date() }
                     record.records.push(habitRecord)
                 }
 

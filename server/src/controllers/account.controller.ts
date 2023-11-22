@@ -3,7 +3,8 @@ import { AccountDTO, TrackerDTO } from "../types"
 import { AccountModel, TrackerSchema } from '../models/account.model'
 import { BadRequest } from "../exceptions/Errors";
 import * as encryptor from "../auth/encryptor"
-import {  Types } from "mongoose";
+import { Types } from "mongoose";
+import { RecordListModel } from "../models/record.model";
 
 interface AccountQuery {
     _id?: string;
@@ -69,8 +70,13 @@ class AccountController {
     async createTracker(query: AccountQuery, data: TrackerDTO): Promise<AccountDTO | null> {
 
         const account = await AccountModel.findOne(query);
+<<<<<<< HEAD
         // if not set _id, the _id is repeated of the lasts trackers, before of this commit _id has been created correctly 
         data._id = new Types.ObjectId();
+=======
+        let recordList = await new RecordListModel({ typeRecord: data.typeTracker, records: [] }).save()
+        data.recordId = recordList._id
+>>>>>>> e0b8619 (feat: update date on records)
 
         return new Promise((resolve, reject) => {
             if (!account) {
@@ -100,7 +106,7 @@ class AccountController {
             if (!updateTracker) {
                 reject(new Error('Tracker not found'))
                 return;
-            } 
+            }
 
             if (data.name) {
                 updateTracker.name = data.name
@@ -120,14 +126,14 @@ class AccountController {
         })
 
     }
-    async getTrackers(query:AccountQuery) {  
+    async getTrackers(query: AccountQuery) {
         const account = await AccountModel.findOne(query);
 
         return new Promise((resolve, reject) => {
             if (!account) {
                 reject(new Error('Account not found'))
             } else {
-                
+
                 resolve(account.trackers)
             }
         })
