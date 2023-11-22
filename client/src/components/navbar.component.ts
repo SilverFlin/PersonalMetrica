@@ -1,5 +1,18 @@
+import { logoutUser } from "../hooks/requests";
+
+function bindNavbar() {
+  // add event listener to logout button
+  const logoutBtn = document.getElementById("nav-logout-btn")!;
+  logoutBtn.addEventListener("click", () => {
+    logoutUser();
+    alert("User logged out successfully");
+    window.location.hash = "#login";
+  });
+}
+
 function getLandingPageNavbar() {
-    return `
+  setTimeout(bindNavbar, 10);
+  return `
     <div
       class="flex h-32 w-full py-4 gap-6 items-center flex-col justify-center"
     >
@@ -18,7 +31,7 @@ function getLandingPageNavbar() {
           id="nav-login-btn"
           class="text-4xl font-light justify-center shrink-0 items-center flex w-48 h-14"
         >
-          Login
+          <a href="#login" class="h-full w-full">Login</a>
         </div>
       </div>
       <hr class="border-0 bg-gray-200 h-px w-full" />
@@ -27,7 +40,8 @@ function getLandingPageNavbar() {
 }
 
 function getAppNavbar() {
-    return `
+  setTimeout(bindNavbar, 10);
+  return `
     <div
       class="flex h-32 w-full py-4 gap-6 items-center flex-col justify-center"
     >
@@ -37,13 +51,13 @@ function getAppNavbar() {
           <nav
             class="list-none text-4xl font-light flex h-full w-full justify-between items-center shrink-0"
           >
-            <li><a href="#" class="text-[#5BFAC0]">Trackers</a></li>
-            <li><a href="#">Profile</a></li>
-            <li><a href="#">Help</a></li>
+            <li><a href="#dashboard" class="text-[#5BFAC0]">Trackers</a></li>
+            <li><a href="#profile">Profile</a></li>
+            <li><a href="#help">Help</a></li>
           </nav>
         </div>
         <div
-          id="nav-login-btn"
+          id="nav-logout-btn"
           class="text-4xl font-light justify-center shrink-0 items-center flex w-48 h-14"
         >
           Log out
@@ -55,6 +69,8 @@ function getAppNavbar() {
 }
 
 export {
-    getLandingPageNavbar,
-    getAppNavbar
+  getLandingPageNavbar,
+  getAppNavbar,
+  bindNavbar
 };
+
