@@ -23,11 +23,19 @@ function timeAgo(timestamp: Date): string {
   return `${days} days old`;
 }
 
+
+
 export default async function getProfilePage() {
-  let user = await loadUser();
+  let user = await loadUser()
+    .catch((error) => {
+      console.log(error);
+      window.location.hash = "#login";
+      return;
+    });
+
   let username = user?.email.split('@')[0];
   let userDaysOld = timeAgo(new Date(user?.createdAt as string));
-  console.log(user)
+
   return `
         <div
       class="flex h-screen w-full px-[5rem] py-[3rem] gap-8 items-start justify-center"
