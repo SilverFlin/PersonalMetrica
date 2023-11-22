@@ -124,6 +124,19 @@ async function httpDeleteTracker(idTracker: string) {
     return data;
 }
 
+async function httpGetRecordList(idRecordList: string) {
+    const { data } = await instance({
+        method: 'GET',
+        url: `/record-list/${idRecordList}`,
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token()
+        }
+    });
+
+    return data;
+}
+
 
 
 export {
@@ -134,5 +147,6 @@ export {
     httpCreateTracker,
     httpEditTracker,
     httpDeleteTracker,
-    logoutUser
+    logoutUser,
+    httpGetRecordList
 };

@@ -70,13 +70,8 @@ class AccountController {
     async createTracker(query: AccountQuery, data: TrackerDTO): Promise<AccountDTO | null> {
 
         const account = await AccountModel.findOne(query);
-<<<<<<< HEAD
-        // if not set _id, the _id is repeated of the lasts trackers, before of this commit _id has been created correctly 
-        data._id = new Types.ObjectId();
-=======
         let recordList = await new RecordListModel({ typeRecord: data.typeTracker, records: [] }).save()
         data.recordId = recordList._id
->>>>>>> e0b8619 (feat: update date on records)
 
         return new Promise((resolve, reject) => {
             if (!account) {
@@ -146,12 +141,13 @@ class AccountController {
             if (!account) {
                 reject(new Error('Account not found'))
                 return;
-            } 
-           
+            }
+
             const updateTracker = account.trackers.filter(e => {
-                console.log(e._id?.toString()!=idTracker)
-                console.log(e._id?.toString(),idTracker)
-                return e._id?.toString()!=idTracker})
+                console.log(e._id?.toString() != idTracker)
+                console.log(e._id?.toString(), idTracker)
+                return e._id?.toString() != idTracker
+            })
             console.log(updateTracker, account.trackers)
             if (!updateTracker) {
                 reject(new Error('Tracker not found'))
@@ -163,7 +159,7 @@ class AccountController {
                 }).catch((error) => {
                     reject(error)
                 })
-            
+
         })
     }
 

@@ -1,11 +1,25 @@
 import getTrackerBadgeComponent from "../components/trackerBadge.component";
-import { httpGetUserFromToken } from "../hooks/requests";
+import { httpGetRecordList, httpGetUserFromToken } from "../hooks/requests";
 
 export interface Tracker {
   _id: string,
   name: string,
   typeTracker: string,
   creationTime: string,
+  recordId: string,
+}
+
+export interface RecordList {
+  records: HabitRecord[] | TimerRecord[],
+  typeRecord: string,
+}
+
+export interface HabitRecord {
+
+}
+
+export interface TimerRecord {
+  durationInSeconds: number,
 }
 
 export interface UserProfile {
@@ -20,6 +34,11 @@ async function loadUser(): Promise<UserProfile | null> {
   return user;
 }
 
+async function getTrackerRecords(trackerId: string): Promise<any> {
+  let recordList = await httpGetRecordList(trackerId);
+  return recordList
+}
+
 function timeAgo(timestamp: Date): string {
   const now = new Date();
   const diff = now.getTime() - timestamp.getTime();
@@ -28,7 +47,18 @@ function timeAgo(timestamp: Date): string {
   return `${days} days old`;
 }
 
+async function getAllBadges(user?: UserProfile): Promise<string> {
+  let allBadges: string = '';
 
+  if (user) {
+    for (let tracker of user.trackers) {
+      let trackerBadge = getTrackerBadgeComponent(tracker, await httpGetRecordList(tracker.recordId));
+      allBadges += trackerBadge;
+    }
+  }
+
+  return allBadges;
+}
 
 export default async function getProfilePage() {
   let user = await loadUser()
@@ -41,10 +71,12 @@ export default async function getProfilePage() {
   let username = user?.email.split('@')[0];
   let userDaysOld = timeAgo(new Date(user?.createdAt as string));
 
-  let allBadges = user?.trackers.map((tracker) => {
-    return getTrackerBadgeComponent(tracker);
-  });
 
+  let allBadges: string = '';
+
+  if (user) {
+    allBadges = await getAllBadges(user);
+  }
 
   return `
         <div
