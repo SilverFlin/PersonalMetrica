@@ -9,7 +9,7 @@ import { renderDashboardPage, renderLandingPage, renderLoginPage, renderProfileP
 type Route = {
     title: string;
     description: string;
-    template: string;
+    template: () => string | Promise<string>;
     bindElements?: () => void;
     isProtected?: boolean;
 }
@@ -22,44 +22,44 @@ const routes: Routes = {
     404: {
         title: "404",
         description: "Page not found",
-        template: `<p>404</p>`
+        template: () => "<h1>404</h1><p>Page not found</p>"
     },
     '/': {
         title: "Landing",
         description: "Landing page",
-        template: renderLandingPage(),
+        template: renderLandingPage,
         bindElements: bindLandingPage
     },
     login: {
         title: "Login",
         description: "Login page",
-        template: renderLoginPage(),
+        template: renderLoginPage,
         bindElements: bindLoginPage
     },
     register: {
         title: "Register",
         description: "Register page",
-        template: renderRegisterPage(),
+        template: renderRegisterPage,
         bindElements: bindRegisterPage
     },
     dashboard: {
         title: "Dashboard",
         description: "Dashboard page",
-        template: renderDashboardPage(),
+        template: renderDashboardPage,
         isProtected: true
     },
     profile: {
         title: "Profile",
         description: "Profile page",
-        template: await renderProfilePage(),
+        template: renderProfilePage,
         isProtected: true
     },
     trackers: {
         title: "Trackers",
         description: "Trackers page",
-        template: renderTrackerPage(),
+        template: renderTrackerPage,
         bindElements: bindTrackerPage,
-        //isProtected: true
+        // isProtected: true
     }
 }
 
@@ -86,7 +86,7 @@ const locationHandler = async () => {
         }
     }
 
-    const html = route.template
+    const html = await route.template()
 
     // TODO cambiar?
     const app = document.getElementById("app")!;

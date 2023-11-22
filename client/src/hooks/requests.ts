@@ -46,20 +46,25 @@ async function httpGetUserFromToken(token: string): Promise<UserProfile> {
 
     console.log('token', token)
     return new Promise(async (resolve, reject) => {
-        const { data, status } = await instance({
+        if (!token) reject(new Error('Token not found'))
+
+        instance({
             method: 'GET',
             url: `/account/profile`,
             headers: {
                 'Content-Type': 'application/json',
                 'x-auth-token': token
             }
+        }).then((response) => {
+            if (response.status === 200 || response.status === 201) {
+                resolve(response.data)
+            }
+        }).catch((error) => {
+            reject(error)
         })
 
-        if (status === 200 || status === 201) {
-            resolve(data)
-        }
 
-        reject('Error getting user from token')
+
     })
 
 }
