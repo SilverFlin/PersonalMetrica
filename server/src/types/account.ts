@@ -14,7 +14,7 @@ interface AccountDTO {
     password: string;
     trackers: TrackerDTO[];
     url_img?: string;
-    readonly cratedAt: Date;
+    readonly createdAt: Date;
 }
 
 export {
