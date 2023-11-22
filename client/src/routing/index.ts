@@ -51,7 +51,7 @@ const routes: Routes = {
     profile: {
         title: "Profile",
         description: "Profile page",
-        template: renderProfilePage(),
+        template: await renderProfilePage(),
         isProtected: true
     },
     trackers: {
@@ -90,15 +90,15 @@ const locationHandler = async () => {
 
     // TODO cambiar?
     const app = document.getElementById("app")!;
-    // 
-    if (route.title != 'Login' && route.title != 'Register') {
+    if (['Login', 'Register'].includes(route.title)) {
+        app.innerHTML = html;
+    } else if (route.title == 'Landing') {
         app.innerHTML = getLandingPageNavbar();
         app.innerHTML += html;
     } else {
         app.innerHTML = getAppNavbar();
-        app.innerHTML = html;
+        app.innerHTML += html;
     }
-
 
     await route.bindElements?.();
 

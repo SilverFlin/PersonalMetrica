@@ -1,6 +1,6 @@
 import axios from 'axios'
-import { MyJwtPayload, decodeToken } from '../utils/jwt'
 import { token } from '../helpers/constants'
+import { UserProfile } from '../views/ProfilePage'
 
 const instance = axios.create({
     baseURL: 'http://localhost:3000',
@@ -38,34 +38,34 @@ async function httpLoginUser(user: User): Promise<string> {
     throw new Error('Error registering user')
 }
 
-async function httpGetUserFromToken(token: string): Promise<User | null> {
+function logoutUser() {
+    sessionStorage.removeItem("token");
+}
+
+async function httpGetUserFromToken(token: string): Promise<UserProfile> {
 
     console.log('token', token)
-    let myJwtPayload: MyJwtPayload | null;
-    try {
-        myJwtPayload = await decodeToken(token)
-    } catch (e) {
-        console.log(e)
-        return null
-    }
+    return new Promise(async (resolve, reject) => {
+        const { data, status } = await instance({
+            method: 'GET',
+            url: `/account/profile`,
+            headers: {
+                'Content-Type': 'application/json',
+                'x-auth-token': token
+            }
+        })
 
-    console.log(myJwtPayload)
+        if (status === 200 || status === 201) {
+            resolve(data)
+        }
 
-    const { data, status } = await instance({
-        method: 'GET',
-        url: `/account/`
+        reject('Error getting user from token')
     })
-
-    if (status === 200 || status === 201) {
-        return data
-    }
-
-    return null
 
 }
 
 
- async function httpGetTrackers() {
+async function httpGetTrackers() {
     const { data } = await instance({
         method: 'GET',
         url: '/tracker',
@@ -78,7 +78,7 @@ async function httpGetUserFromToken(token: string): Promise<User | null> {
     return data;
 }
 
- async function httpCreateTracker(body: any) {
+async function httpCreateTracker(body: any) {
     const { data } = await instance({
         method: 'POST',
         url: '/tracker',
@@ -92,7 +92,7 @@ async function httpGetUserFromToken(token: string): Promise<User | null> {
     return data;
 }
 
- async function httpEditTracker(idTracker: string, body: any) {
+async function httpEditTracker(idTracker: string, body: any) {
     const { data } = await instance({
         method: 'PUT',
         url: `/tracker/${idTracker}`,
@@ -106,7 +106,7 @@ async function httpGetUserFromToken(token: string): Promise<User | null> {
     return data;
 }
 
- async function httpDeleteTracker(idTracker: string) {
+async function httpDeleteTracker(idTracker: string) {
     const { data } = await instance({
         method: 'DELETE',
         url: `/tracker/${idTracker}`,
@@ -128,5 +128,6 @@ export {
     httpGetTrackers,
     httpCreateTracker,
     httpEditTracker,
-    httpDeleteTracker
+    httpDeleteTracker,
+    logoutUser
 };

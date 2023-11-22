@@ -1,6 +1,34 @@
-export default function getProfilePage() {
+import { httpGetUserFromToken } from "../hooks/requests";
 
-    return `
+export interface Tracker {
+}
+
+export interface UserProfile {
+  email: string;
+  url_img: string;
+  createdAt: string;
+  trackers: Tracker[];
+}
+
+async function loadUser(): Promise<UserProfile | null> {
+  let user: UserProfile | null = await httpGetUserFromToken(sessionStorage.getItem("token")!)
+  return user;
+}
+
+function timeAgo(timestamp: Date): string {
+  const now = new Date();
+  const diff = now.getTime() - timestamp.getTime();
+  const days = Math.floor(diff / (1000 * 60 * 60 * 24));
+
+  return `${days} days old`;
+}
+
+export default async function getProfilePage() {
+  let user = await loadUser();
+  let username = user?.email.split('@')[0];
+  let userDaysOld = timeAgo(new Date(user?.createdAt as string));
+  console.log(user)
+  return `
         <div
       class="flex h-screen w-full px-[5rem] py-[3rem] gap-8 items-start justify-center"
     >
@@ -18,8 +46,8 @@ export default function getProfilePage() {
             <div
               class="flex flex-col justify-between items-end flex-1 self-stretch"
             >
-              <p class="text-[2rem] font-extralight">toledorusso</p>
-              <p class="text-[2rem] font-extralight">31 days old</p>
+              <p class="text-[2rem] font-extralight max-w-[10rem] text-ellipsis overflow-hidden">${username}</p>
+              <p class="text-[2rem] font-extralight">${userDaysOld}</p>
             </div>
           </div>
           <div
