@@ -1,4 +1,4 @@
-import { getLandingPageNavbar } from "../components/navbar.component";
+import { getAppNavbar, getLandingPageNavbar } from "../components/navbar.component";
 import { bindLandingPage } from "../views/LandingPage";
 import { bindLoginPage } from "../views/LoginPage";
 import { bindRegisterPage } from "../views/RegisterPage";
@@ -54,7 +54,7 @@ const routes: Routes = {
         template: renderProfilePage(),
         isProtected: true
     },
-    trackers:{
+    trackers: {
         title: "Trackers",
         description: "Trackers page",
         template: renderTrackerPage(),
@@ -87,17 +87,18 @@ const locationHandler = async () => {
     }
 
     const html = route.template
-    
+
     // TODO cambiar?
-   const app= document.getElementById("app")!; 
-   // 
-   if(route.title!='Login'&&route.title!='Register'){
-       app.innerHTML = getLandingPageNavbar();
-       app.innerHTML += html;
-   }else{
-       app.innerHTML = html;
-   }
-    
+    const app = document.getElementById("app")!;
+    // 
+    if (route.title != 'Login' && route.title != 'Register') {
+        app.innerHTML = getLandingPageNavbar();
+        app.innerHTML += html;
+    } else {
+        app.innerHTML = getAppNavbar();
+        app.innerHTML = html;
+    }
+
 
     await route.bindElements?.();
 

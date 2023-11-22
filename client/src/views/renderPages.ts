@@ -1,5 +1,7 @@
+import { getAppNavbar, getLandingPageNavbar } from "../components/navbar.component"
 import getLandingPage from "./LandingPage"
 import getLoginPage from "./LoginPage"
+import getProfilePage from "./ProfilePage"
 import getRegisterPage from "./RegisterPage"
 import getTrackerPage from "./TrackerPage"
 
@@ -29,7 +31,8 @@ function renderDashboardPage() {
 
 function renderProfilePage() {
     return `
-    <p>profile page</p>`
+    ${getProfilePage()}
+    `
 }
 function renderTrackerPage() {
     return `
