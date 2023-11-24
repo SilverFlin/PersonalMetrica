@@ -15,6 +15,15 @@ export function myTrackersComponent(nodeParent: HTMLElement, data?: any) {
     myTrackers.appendChild(myTrackersBody);
     
     nodeParent.appendChild(myTrackers)
+    if(data.length === 0 ) {
+        myTrackersBody.innerHTML = `
+        <div class="my-trackers-body-empty">
+            <p>You don't have any trackers yet.</p>
+
+        </div>
+        `
+        return;
+    }
     trackerComponent(myTrackersBody, data)!
 
 

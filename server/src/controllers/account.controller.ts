@@ -69,6 +69,8 @@ class AccountController {
     async createTracker(query: AccountQuery, data: TrackerDTO): Promise<AccountDTO | null> {
 
         const account = await AccountModel.findOne(query);
+        // if not set _id, the _id is repeated of the lasts trackers, before of this commit _id has been created correctly 
+        data._id = new Types.ObjectId();
 
         return new Promise((resolve, reject) => {
             if (!account) {
@@ -131,25 +133,31 @@ class AccountController {
         })
     }
 
-    async removeTracker(query: AccountQuery, nameTracker: string): Promise<AccountDTO | null> {
+    async removeTracker(query: AccountQuery, idTracker: string): Promise<AccountDTO | null> {
 
         const account = await AccountModel.findOne(query);
         return new Promise((resolve, reject) => {
             if (!account) {
                 reject(new Error('Account not found'))
-            } else {
-                const updateTracker = account.trackers.filter(e => e.name !== nameTracker)
-                if (!updateTracker) {
-                    reject(new Error('Tracker not found'))
-                }
-                account.trackers = updateTracker
-                account.save()
-                    .then((account) => {
-                        resolve(account)
-                    }).catch((error) => {
-                        reject(error)
-                    })
+                return;
+            } 
+           
+            const updateTracker = account.trackers.filter(e => {
+                console.log(e._id?.toString()!=idTracker)
+                console.log(e._id?.toString(),idTracker)
+                return e._id?.toString()!=idTracker})
+            console.log(updateTracker, account.trackers)
+            if (!updateTracker) {
+                reject(new Error('Tracker not found'))
             }
+            account.trackers = updateTracker
+            account.save()
+                .then((account) => {
+                    resolve(account)
+                }).catch((error) => {
+                    reject(error)
+                })
+            
         })
     }
 

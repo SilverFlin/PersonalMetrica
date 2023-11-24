@@ -7,7 +7,6 @@ const router = Router()
 
 router.get('/', isAuthenticated,  (req, res) => {
     const accountController = new AccountController() 
-    console.log(req.params);
     
     accountController.getTrackers({ _id: req.user.id })
         .then((account) => {
@@ -16,17 +15,29 @@ router.get('/', isAuthenticated,  (req, res) => {
             res.status(500).json({ message: error.message })
         })
 })
-// TODO move to its own router,  the user id get on token
+// the user id get on token
 router.post('/', isAuthenticated,  (req, res) => {
     const accountController = new AccountController()
     accountController.createTracker({ _id: req.user.id }, req.body)
+        .then((account) => {
+            console.log(account)
+         return   res.status(200).json(account)
+        }).catch((error) => { 
+         return res.status(500).json({ message: error.message })
+        })
+})
+//  the param id should be the tracker id, the user id get on token
+router.delete('/:id', isAuthenticated,paramIdValidator,  (req, res) => {
+    
+    const accountController = new AccountController() 
+    accountController.removeTracker({ _id: req.user.id }, req.params.id as string)
         .then((account) => {
             res.status(200).json(account)
         }).catch((error) => {
             res.status(500).json({ message: error.message })
         })
 })
-// TODO the param id should be the tracker id, the user id get on token
+//  the param id should be the tracker id, the user id get on token
 router.put('/:id', isAuthenticated,paramIdValidator,  (req, res) => {
     
     const accountController = new AccountController() 
