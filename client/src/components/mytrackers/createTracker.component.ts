@@ -1,10 +1,10 @@
-import { httpCreateTracker as createTracker, httpGetTrackers as getTrackers } from "../../hooks/requests";
+import { httpCreateTracker, httpGetTrackers as getTrackers } from "../../hooks/requests";
 import { myTrackersComponent } from "./myTrackers.component";
 
 
 
 export default function createTrackerComponent() {
-   const nodeParent =document.getElementById('mytrackers')!;
+    const nodeParent = document.getElementById('mytrackers')!;
     nodeParent.innerHTML = `
     <form  id="createTracker">
     <div class="form-tracker"  tabindex="0">
@@ -58,10 +58,10 @@ export default function createTrackerComponent() {
     //setup selects
     setupSelect(nodeParent.querySelector<HTMLDivElement>('#select-type-tracker')!)
     handleEvents(nodeParent.querySelector<HTMLDivElement>('#createTracker')!)
-    
+
     // fetch to get trackers from server
-    getTrackers().then(e => {
-        myTrackersComponent(nodeParent, e);
+    getTrackers().then(res => {
+        myTrackersComponent(nodeParent, res);
     })
 }
 
@@ -84,40 +84,39 @@ function handleEvents(nodeParent: HTMLElement) {
     // test 
     const input = nodeParent.querySelector<HTMLTextAreaElement>('.text-input')
     const button = nodeParent.querySelector<HTMLButtonElement>('#btn-create-tracker')
-
-    button!.addEventListener('click', () => {
-        const typeTracker = nodeParent.querySelector<HTMLInputElement>('.select-value');
-
-        const body = {
-            name: input!.value,
-            typeTracker: typeTracker!.value
-        }
-        createTracker(body)
-        input!.value = ''
-    });
-    input!.addEventListener('keypress', (e) => {
-        const typeTracker = nodeParent.querySelector<HTMLInputElement>('.select-value');
-
-
-        if (e.key === 'Enter') {
-            e.preventDefault()
-            const body = {
-                name: input!.value,
-                typeTracker: typeTracker!.value
+    function createTracker() {
+        const selectedTypeTracker = nodeParent.querySelector<HTMLInputElement>('.select-value');
+        const name = input?.value;
+        const typeTracker = selectedTypeTracker?.value;
+        if (!name) { alert("name must be not empty"); return; }
+        if (!typeTracker) { alert("type tracker must be selected"); return; }
+        
+        httpCreateTracker(
+            {
+                name,
+                typeTracker
             }
-            createTracker(body)
+        ).then(res => {
+            createTrackerComponent();
             input!.value = ''
-        }
+        })
+        // handle error
 
+    }
+
+    button!.addEventListener('click', (e) => {
+        e.preventDefault();
+        createTracker();
     });
+
+    input!.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            createTracker();
+            
+        }
+    });
+
 
 }
 
-
-
-/***Example
- * const trackers = createView(app)
- * createTracker(trackers); 
- * myTrackersComponent(trackers, [{ name: 'Tracker 1' }, { name: 'Tracker 2' },{ name: 'Tracker 3' }]);
- * setupTheme()
- */
