@@ -80,7 +80,7 @@ function editItemTrackerComponent(nodeParent: HTMLElement, data: any): HTMLEleme
     editItem.classList.add('edit-item');
 
     editItem.innerHTML = `
-            <h4>${data.name} 
+            <h4 id="name-tracker">${data.name} 
                 <svg width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
                     <path  d="m3.99 16.854-1.314 3.504a.75.75 0 0 0 .966.965l3.503-1.314a3 3 0 0 0 1.068-.687L18.36 9.175s-.354-1.061-1.414-2.122c-1.06-1.06-2.122-1.414-2.122-1.414L4.677 15.786a3 3 0 0 0-.687 1.068zm12.249-12.63 1.383-1.383c.248-.248.579-.406.925-.348.487.08 1.232.322 1.934 1.025.703.703.945 1.447 1.025 1.934.058.346-.1.677-.348.925L19.774 7.76s-.353-1.06-1.414-2.12c-1.06-1.062-2.121-1.415-2.121-1.415z" >
                     </path>
@@ -127,15 +127,16 @@ function handleEventsInput(input: HTMLInputElement, nodeParent: HTMLElement) {
     input.addEventListener('change', () => {
 
         hideInput(nodeParent)
+        
+        editTracker(input.getAttribute('aria-value')!, { name: input.value })
+                .then(() => createTrackerComponent())
 
     })
     // listener to update name on tracker item
     input.addEventListener('keypress', (e) => {
 
         if (e!.key === 'Enter') {
-            hideInput(nodeParent);
-            editTracker(input.getAttribute('aria-value')!, { name: input.value })
-                .then(e => input.value = e.name)
+            hideInput(nodeParent);   
         }
     })
     // listener to hide edit name tracker input
