@@ -1,4 +1,5 @@
-import { httpEditTracker as editTracker } from "../../hooks/requests";
+import { httpEditTracker as editTracker, httpDeleteTracker } from "../../hooks/requests";
+import createTrackerComponent from "./createTracker.component";
 import createSelect from "./selectChart.component";
 
 
@@ -44,7 +45,14 @@ export default function trackerComponent(nodeParent: HTMLElement, data?: any): H
             const buttonEntry = headerItem.querySelector<HTMLButtonElement>('button')!
             const buttonDelete = footerItem.querySelector<HTMLButtonElement>('button')!
             buttonEntry.addEventListener('click', () => {
-                console.log('fetch... detelete')
+               
+              const id=  buttonEntry.getAttribute('aria-value')
+                if (id) {
+                    
+                    httpDeleteTracker(id!).then(()=> createTrackerComponent())
+                    
+                }
+
             });
             buttonDelete.addEventListener('click', () => {
                 console.log('Capture entry.....')
@@ -86,7 +94,7 @@ function editItemTrackerComponent(nodeParent: HTMLElement, data: any): HTMLEleme
 
     nodeParent.appendChild(editItem)
     nodeParent.innerHTML += `
-    <button>
+    <button id="deleteTracker" aria-value="${data._id}">
     <svg  width="25px" heigth="25px" background="none" viewBox="-3 0 32 32" version="1.1">
         <g>
         <g  transform="translate(-261.000000, -205.000000)" >

@@ -60,7 +60,7 @@ export default function createTrackerComponent() {
     handleEvents(nodeParent.querySelector<HTMLDivElement>('#createTracker')!)
 
     // fetch to get trackers from server
-    getTrackers().then(res => {
+    getTrackers().then(res => {  
         myTrackersComponent(nodeParent, res);
     })
 }
