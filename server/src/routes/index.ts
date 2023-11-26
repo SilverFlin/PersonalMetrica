@@ -2,7 +2,7 @@ import express from 'express'
 import accountRouter from './account.routes';
 import recordListRouter from './recordList.routes';
 import authRouter from './auth.routes'
-import  trackerRouter from './tracker.routes'
+import trackerRouter from './tracker.routes'
 import { errorHandler } from '../middlewares/errorHandler';
 import { BadRequest } from '../exceptions/Errors';
 import { accountValidator } from '../middlewares/validator';

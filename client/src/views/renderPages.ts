@@ -29,9 +29,9 @@ function renderDashboardPage() {
     <p>dashboard page</p>`
 }
 
-function renderProfilePage() {
+async function renderProfilePage() {
     return `
-    ${getProfilePage()}
+    ${await getProfilePage()}
     `
 }
 function renderTrackerPage() {
