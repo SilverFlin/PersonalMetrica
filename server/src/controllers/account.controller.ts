@@ -3,12 +3,7 @@ import { AccountDTO, TrackerDTO } from "../types"
 import { AccountModel, TrackerSchema } from '../models/account.model'
 import { BadRequest } from "../exceptions/Errors";
 import * as encryptor from "../auth/encryptor"
-<<<<<<< Updated upstream
 import { Types } from "mongoose";
-=======
-import {  Types } from "mongoose";
-import { RecordListController } from "./record.controller";
->>>>>>> Stashed changes
 import { RecordListModel } from "../models/record.model";
 
 interface AccountQuery {
