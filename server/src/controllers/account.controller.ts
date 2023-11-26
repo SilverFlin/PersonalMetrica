@@ -3,7 +3,12 @@ import { AccountDTO, TrackerDTO } from "../types"
 import { AccountModel, TrackerSchema } from '../models/account.model'
 import { BadRequest } from "../exceptions/Errors";
 import * as encryptor from "../auth/encryptor"
+<<<<<<< Updated upstream
 import { Types } from "mongoose";
+=======
+import {  Types } from "mongoose";
+import { RecordListController } from "./record.controller";
+>>>>>>> Stashed changes
 import { RecordListModel } from "../models/record.model";
 
 interface AccountQuery {
@@ -70,6 +75,7 @@ class AccountController {
     async createTracker(query: AccountQuery, data: TrackerDTO): Promise<AccountDTO | null> {
 
         const account = await AccountModel.findOne(query);
+        data._id = new Types.ObjectId();
         let recordList = await new RecordListModel({ typeRecord: data.typeTracker, records: [] }).save()
         data.recordId = recordList._id
 
