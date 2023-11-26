@@ -218,3 +218,7 @@ dialog#trackerDialog{
     background-color: var(--primary-background);
 
 }
+
+#profile-badge{
+  color: #373737
+}

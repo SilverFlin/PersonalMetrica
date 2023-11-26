@@ -80,6 +80,7 @@ export default async function getProfilePage() {
 
   return `
         <div
+        id="profile-badge"
       class="flex h-screen w-full px-[5rem] py-[3rem] gap-8 items-start justify-center"
     >
       <div class="flex flex-col items-start gap-[1.6rem]">
