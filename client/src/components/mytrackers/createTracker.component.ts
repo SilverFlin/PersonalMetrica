@@ -1,4 +1,4 @@
-import { httpCreateTracker, httpGetTrackers as getTrackers } from "../../hooks/requests";
+import { httpCreateTracker, httpGetTrackers  } from "../../hooks/requests";
 import { myTrackersComponent } from "./myTrackers.component";
 
 
@@ -60,7 +60,7 @@ export default function createTrackerComponent() {
     handleEvents(nodeParent.querySelector<HTMLDivElement>('#createTracker')!)
 
     // fetch to get trackers from server
-    getTrackers().then(res => {  
+    httpGetTrackers().then(res => {  
         myTrackersComponent(nodeParent, res);
     })
 }
@@ -96,7 +96,7 @@ function handleEvents(nodeParent: HTMLElement) {
                 name,
                 typeTracker
             }
-        ).then(res => {
+        ).then(() => {
             createTrackerComponent();
             input!.value = ''
         })
