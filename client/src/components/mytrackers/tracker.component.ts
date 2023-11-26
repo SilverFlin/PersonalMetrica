@@ -1,5 +1,6 @@
 import { httpEditTracker as editTracker, httpDeleteTracker } from "../../hooks/requests";
 import createTrackerComponent from "./createTracker.component";
+import { bindModal, createModalDialog, getForm } from "./modaltracker.component";
 import createSelect from "./selectChart.component";
 
 
@@ -34,6 +35,7 @@ export default function trackerComponent(nodeParent: HTMLElement, data?: any): H
                     `;
 
             footerItem.innerHTML = `<button class="btn-primary">Capture entry</button>`
+           footerItem.innerHTML+= createModalDialog(getForm(element.typeTracker));
             createSelect(footerItem, { idHTMLElement: 'select-type-graphic' })
             trackerItem.appendChild(footerItem);
 
@@ -42,11 +44,11 @@ export default function trackerComponent(nodeParent: HTMLElement, data?: any): H
             // listener to show edit name tracker input
             const editTracker = trackerItem.querySelector<HTMLElement>('.edit-tracker')!;
             const input = trackerItem.querySelector<HTMLInputElement>('input')!
-            const buttonEntry = headerItem.querySelector<HTMLButtonElement>('button')!
-            const buttonDelete = footerItem.querySelector<HTMLButtonElement>('button')!
-            buttonEntry.addEventListener('click', () => {
+            const buttonDelete = headerItem.querySelector<HTMLButtonElement>('button')!
+            const buttonEntry = footerItem.querySelector<HTMLButtonElement>('button')!
+            buttonDelete.addEventListener('click', () => {
                
-              const id=  buttonEntry.getAttribute('aria-value')
+              const id=  buttonDelete.getAttribute('aria-value')
                 if (id) {
                     
                     httpDeleteTracker(id!).then(()=> createTrackerComponent())
@@ -54,8 +56,8 @@ export default function trackerComponent(nodeParent: HTMLElement, data?: any): H
                 }
 
             });
-            buttonDelete.addEventListener('click', () => {
-                console.log('Capture entry.....')
+            buttonEntry.addEventListener('click', () => {
+               bindModal(footerItem,element);
             });
             trackerItem.querySelector('.edit-item')!.addEventListener("click", () => {
                 //setup edit name

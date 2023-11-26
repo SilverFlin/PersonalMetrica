@@ -171,8 +171,26 @@ body.dark {
 
 .btn-dark-mode {
   position: fixed;
-  top: 10%;
+  width: auto;
+  top: 8%;
   right: 2%;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: content-box;
+  fill: var(--primary-fill-color);
+  
+
+}
+
+.btn-dark-mode:hover {
+  fill: var(--primary-color);  
+}
+
+.dark{
+  fill: whitesmoke
+
 }
 
 button {
@@ -200,4 +218,25 @@ button {
 
 .edit-item:hover h4 >svg{
   opacity: 1;
+}
+
+dialog#trackerDialog{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  background-color: none;
+  border-radius: 3px;
+
+
+}
+ #recordForm{
+
+  position: sticky; 
+  
+    background-color: var(--primary-background);
+
+}
+
+#profile-badge{
+  color: #373737
 }

@@ -1,4 +1,4 @@
-import { httpCreateTracker, httpGetTrackers as getTrackers } from "../../hooks/requests";
+import { httpCreateTracker, httpGetTrackers  } from "../../hooks/requests";
 import { myTrackersComponent } from "./myTrackers.component";
 
 
@@ -51,16 +51,16 @@ export default function createTrackerComponent() {
             </li>
         </ul>
     </div>
-    <textarea class="text-input" rows="1" placeholder="What is your tracker?"></textarea>
-    <button class="btn-primary" id="btn-create-tracker">create</button>
+    <input class="text-input" rows="1" placeholder="What is your tracker?"></input>
+    <button class="btn-primary" id="btn-create-tracker type="submit">create</button>
     </div>
     </form>`
     //setup selects
     setupSelect(nodeParent.querySelector<HTMLDivElement>('#select-type-tracker')!)
-    handleEvents(nodeParent.querySelector<HTMLDivElement>('#createTracker')!)
+    bindFormCreateTracker(nodeParent.querySelector<HTMLDivElement>('#createTracker')!)
 
     // fetch to get trackers from server
-    getTrackers().then(res => {  
+    httpGetTrackers().then(res => {  
         myTrackersComponent(nodeParent, res);
     })
 }
@@ -80,10 +80,9 @@ export function setupSelect(element: HTMLDivElement) {
     })
 }
 
-function handleEvents(nodeParent: HTMLElement) {
+function bindFormCreateTracker(nodeParent: HTMLElement) {
     // test 
     const input = nodeParent.querySelector<HTMLTextAreaElement>('.text-input')
-    const button = nodeParent.querySelector<HTMLButtonElement>('#btn-create-tracker')
     function createTracker() {
         const selectedTypeTracker = nodeParent.querySelector<HTMLInputElement>('.select-value');
         const name = input?.value;
@@ -96,7 +95,7 @@ function handleEvents(nodeParent: HTMLElement) {
                 name,
                 typeTracker
             }
-        ).then(res => {
+        ).then(() => {
             createTrackerComponent();
             input!.value = ''
         })
@@ -104,18 +103,11 @@ function handleEvents(nodeParent: HTMLElement) {
 
     }
 
-    button!.addEventListener('click', (e) => {
+    nodeParent.addEventListener('submit', (e) => {
         e.preventDefault();
         createTracker();
     });
 
-    input!.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            createTracker();
-            
-        }
-    });
 
 
 }

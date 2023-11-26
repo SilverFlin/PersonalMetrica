@@ -70,6 +70,7 @@ class AccountController {
     async createTracker(query: AccountQuery, data: TrackerDTO): Promise<AccountDTO | null> {
 
         const account = await AccountModel.findOne(query);
+        data._id = new Types.ObjectId();
         let recordList = await new RecordListModel({ typeRecord: data.typeTracker, records: [] }).save()
         data.recordId = recordList._id
 

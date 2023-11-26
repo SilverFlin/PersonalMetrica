@@ -137,6 +137,19 @@ async function httpGetRecordList(idRecordList: string) {
     return data;
 }
 
+async function httpCreateRecordItem(id:string,body: any) {
+    const { data } = await instance({
+        method: 'PUT',
+        url: '/record-list/recordItem/'+id,
+        data: body,
+        headers: {
+            'Content-Type': 'application/json',
+            'x-auth-token': token()
+        }
+    });
+
+    return data;
+}
 
 
 export {
@@ -148,5 +161,6 @@ export {
     httpEditTracker,
     httpDeleteTracker,
     logoutUser,
-    httpGetRecordList
+    httpGetRecordList,
+    httpCreateRecordItem
 };
