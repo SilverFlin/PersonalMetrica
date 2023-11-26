@@ -201,3 +201,20 @@ button {
 .edit-item:hover h4 >svg{
   opacity: 1;
 }
+
+dialog#trackerDialog{
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%); 
+  background-color: none;
+  border-radius: 3px;
+
+
+}
+ #recordForm{
+
+  position: sticky; 
+  
+    background-color: var(--primary-background);
+
+}

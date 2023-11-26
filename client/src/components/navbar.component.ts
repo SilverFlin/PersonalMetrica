@@ -51,7 +51,7 @@ function getAppNavbar() {
           <nav
             class="list-none text-4xl font-light flex h-full w-full justify-between items-center shrink-0"
           >
-            <li><a href="#dashboard" class="text-[#5BFAC0]">Trackers</a></li>
+            <li><a href="#trackers" class="text-[#5BFAC0]">Trackers</a></li>
             <li><a href="#profile">Profile</a></li>
             <li><a href="#help">Help</a></li>
           </nav>

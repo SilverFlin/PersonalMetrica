@@ -1,4 +1,3 @@
-import { getAppNavbar, getLandingPageNavbar } from "../components/navbar.component"
 import getLandingPage from "./LandingPage"
 import getLoginPage from "./LoginPage"
 import getProfilePage from "./ProfilePage"
