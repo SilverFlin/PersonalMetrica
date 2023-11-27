@@ -60,9 +60,9 @@ export default function getRegisterPage() {
       >
         <h1 class="font-sans font-light text-5xl">Register</h1>
         <div class="w-full flex flex-col items-start gap-11">
-          <input id="email-input" placeholder="SilverFlin" class="w-full h-16 bg-red-200" type="email" />
-          <input id="password-input"  class="w-full h-16 bg-red-200" type="password" />
-          <input id="password-confirm-input" class="w-full h-16 bg-red-200" type="password" />
+          <input id="email-input" placeholder="SilverFlin" class="w-full h-16 bg-red-200 p-5" type="email" />
+          <input id="password-input"  class="w-full h-16 bg-red-200 p-5" type="password" />
+          <input id="password-confirm-input" class="w-full h-16 bg-red-200 p-5" type="password" />
         </div>
         <div>
           <input type="checkbox" id="register-terms" name="my-checkbox" id="my-checkbox" />
