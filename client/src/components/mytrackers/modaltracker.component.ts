@@ -6,7 +6,7 @@ function bindModalRecord(nodeParent: HTMLElement, element: any) {
         return;
     }
     const type = element.typeTracker;
-    
+
     let trackerDialog = nodeParent.querySelector<HTMLDialogElement>("#trackerDialog")!;
     trackerDialog.showModal();
 
@@ -23,20 +23,21 @@ function bindModalRecord(nodeParent: HTMLElement, element: any) {
         let requestData: any = {};
 
         if (type === 'timer') {
-            requestData.durationInSeconds = input.value;
+            const [minutes, seconds] = input.value.split(':').map(Number);
+            requestData.durationInSeconds = minutes * 60 + seconds;
         }
-         if (type === 'habit') {
+        if (type === 'habit') {
             requestData.habitCompletion = input.checked;
         }
 
         httpCreateRecordItem(element.recordId, requestData)
-        .then(() => {
-            trackerDialog.close();
-            input.value = '';
-            input.checked = false;
-            formRecord.removeAttribute('disabled');
-            saveButton.removeAttribute('disabled');
-        });
+            .then(() => {
+                trackerDialog.close();
+                input.value = '';
+                input.checked = false;
+                formRecord.removeAttribute('disabled');
+                saveButton.removeAttribute('disabled');
+            });
     };
 
     const handleCancel = (e: Event) => {
@@ -76,7 +77,7 @@ function createTimerForm(): string {
         <label for="timer">
             time of record:
         </label>
-            <input class="text-input p-2" type="text" id="timer" name="timer" placeholder="00:00" /**pattern="^[0-9]{2}\:[0-9]{2}$**/"
+            <input class="text-input p-2" type="text" id="timer" name="timer" placeholder="00:00" pattern="^[0-9]{2}\:[0-9]{2}$"
             title="the format of this field must be 00:00"
             >   
       </div>

@@ -180,17 +180,14 @@ body.dark {
   justify-content: center;
   box-sizing: content-box;
   fill: var(--primary-fill-color);
-  
-
 }
 
 .btn-dark-mode:hover {
-  fill: var(--primary-color);  
+  fill: var(--primary-color);
 }
 
-.dark{
-  fill: whitesmoke
-
+.dark {
+  fill: whitesmoke;
 }
 
 button {
@@ -208,7 +205,6 @@ button {
   -webkit-user-select: none;
 }
 
-
 .edit-item:hover h4 {
   text-decoration: underline;
 }
@@ -216,27 +212,23 @@ button {
   opacity: 0;
 }
 
-.edit-item:hover h4 >svg{
+.edit-item:hover h4 > svg {
   opacity: 1;
 }
 
-dialog#trackerDialog{
+dialog#trackerDialog {
   top: 50%;
   left: 50%;
-  transform: translate(-50%, -50%); 
+  transform: translate(-50%, -50%);
   background-color: none;
   border-radius: 3px;
-
-
 }
- #recordForm{
+#recordForm {
+  position: sticky;
 
-  position: sticky; 
-  
-    background-color: var(--primary-background);
-
+  background-color: var(--primary-background);
 }
 
-#profile-badge{
-  color: #373737
+#profile-badge {
+  color: #373737;
 }
