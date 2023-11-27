@@ -34,11 +34,6 @@ async function loadUser(): Promise<UserProfile | null> {
   return user;
 }
 
-async function getTrackerRecords(trackerId: string): Promise<any> {
-  let recordList = await httpGetRecordList(trackerId);
-  return recordList
-}
-
 function timeAgo(timestamp: Date): string {
   const now = new Date();
   const diff = now.getTime() - timestamp.getTime();
