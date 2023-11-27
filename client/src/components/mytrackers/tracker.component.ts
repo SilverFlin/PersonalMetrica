@@ -1,4 +1,5 @@
-import { httpEditTracker as editTracker, httpDeleteTracker } from "../../hooks/requests";
+import { httpEditTracker as editTracker, httpDeleteTracker, httpGetRecordList } from "../../hooks/requests";
+import { createBarChart, createLineChart } from "../chart.component";
 import createTrackerComponent from "./createTracker.component";
 import { bindModal, createModalDialog, getForm } from "./modaltracker.component";
 import createSelect from "./selectChart.component";
@@ -28,14 +29,16 @@ export default function trackerComponent(nodeParent: HTMLElement, data?: any): H
             trackerItem.appendChild(headerItem);
             trackerItem.appendChild(bodyItem);
             editItemTrackerComponent(headerItem, element);
-            bodyItem.innerHTML += `
-                        <div class="tracker-chart">
-                        component to chart js
-                        </div>
-                    `;
+
+
+            httpGetRecordList(element.recordId)
+                .then((data) => {
+                    bodyItem.innerHTML += ` <canvas class="tracker-chart" id="graph-${element.recordId}"> </canvas>`
+                    createTrackerChart(`graph-${element.recordId}`, { records: data.records, title: element.name }, element.typeTracker)
+                })
 
             footerItem.innerHTML = `<button class="btn-primary">Capture entry</button>`
-           footerItem.innerHTML+= createModalDialog(getForm(element.typeTracker));
+            footerItem.innerHTML += createModalDialog(getForm(element.typeTracker));
             createSelect(footerItem, { idHTMLElement: 'select-type-graphic' })
             trackerItem.appendChild(footerItem);
 
@@ -47,17 +50,17 @@ export default function trackerComponent(nodeParent: HTMLElement, data?: any): H
             const buttonDelete = headerItem.querySelector<HTMLButtonElement>('button')!
             const buttonEntry = footerItem.querySelector<HTMLButtonElement>('button')!
             buttonDelete.addEventListener('click', () => {
-               
-              const id=  buttonDelete.getAttribute('aria-value')
+
+                const id = buttonDelete.getAttribute('aria-value')
                 if (id) {
-                    
-                    httpDeleteTracker(id!).then(()=> createTrackerComponent())
-                    
+
+                    httpDeleteTracker(id!).then(() => createTrackerComponent())
+
                 }
 
             });
             buttonEntry.addEventListener('click', () => {
-               bindModal(footerItem,element);
+                bindModal(footerItem, element);
             });
             trackerItem.querySelector('.edit-item')!.addEventListener("click", () => {
                 //setup edit name
@@ -129,16 +132,16 @@ function handleEventsInput(input: HTMLInputElement, nodeParent: HTMLElement) {
     input.addEventListener('change', () => {
 
         hideInput(nodeParent)
-        
+
         editTracker(input.getAttribute('aria-value')!, { name: input.value })
-                .then(() => createTrackerComponent())
+            .then(() => createTrackerComponent())
 
     })
     // listener to update name on tracker item
     input.addEventListener('keypress', (e) => {
 
         if (e!.key === 'Enter') {
-            hideInput(nodeParent);   
+            hideInput(nodeParent);
         }
     })
     // listener to hide edit name tracker input
@@ -146,5 +149,26 @@ function handleEventsInput(input: HTMLInputElement, nodeParent: HTMLElement) {
         hideInput(nodeParent);
 
     })
+}
+
+function createTrackerChart(idHTMLElement: string, data: { records: any, title: string }, typeTracker: any) {
+    // Default chart
+    const chartData: { days: string[], values: number[], title: string } = {
+        days: data.records.map((record: any) => {
+            return new Date(record.creationTime).toLocaleDateString('en-US', { day: 'numeric', month: 'numeric' })
+        }),
+        values: [],
+        title: data.title
+    }
+
+    if (typeTracker === 'timer') {
+        chartData.values = data.records.map((record: any) => record.durationInSeconds)
+        return createLineChart(idHTMLElement, chartData);
+    } else if (typeTracker === 'habit') {
+        chartData.values = data.records.map((record: any) => record.habitCompletion)
+        return createBarChart(idHTMLElement, chartData);
+    }
+
+    return ''
 }
 

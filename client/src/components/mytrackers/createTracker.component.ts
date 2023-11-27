@@ -1,4 +1,4 @@
-import { httpCreateTracker, httpGetTrackers  } from "../../hooks/requests";
+import { httpCreateTracker, httpGetTrackers } from "../../hooks/requests";
 import { myTrackersComponent } from "./myTrackers.component";
 
 
@@ -46,7 +46,7 @@ export default function createTrackerComponent() {
                             d="M6.0963 0.771033C3.97916 2.43667 4.60443 5.9173 7.17307 6.76513C10.7254 7.93723 13.3826 3.73187 10.752 1.10131C9.41555 -0.234802 7.54425 -0.367662 6.0963 0.771033ZM8.28962 7.79048C6.36314 7.90871 5.76227 8.14103 4.06736 9.42046C1.80649 11.1274 1.71754 11.5687 2.78455 15.7674C3.38842 18.1438 3.43609 18.2069 4.62432 18.2031C6.06477 18.199 6.07791 18.2744 5.05556 20.6509C4.46294 22.0291 3.77011 22.8258 2.26286 23.864C1.16057 24.6232 0.162996 25.4936 0.0462738 25.7976C-0.198805 26.4363 0.580342 28.2209 1.19097 28.4191C1.41804 28.493 2.76053 27.6606 4.17357 26.5692C6.03925 25.1284 7.12803 23.9191 8.14887 22.154C9.06013 20.5777 9.62535 19.9183 9.75671 20.2786C9.8678 20.5841 10.5633 22.523 11.3026 24.5872C12.0416 26.6514 12.8932 28.7205 13.1946 29.1847C14.0765 30.5434 16.3528 30.1091 16.3528 28.5824C16.3528 28.2817 15.5084 25.724 14.4763 22.8983C13.4441 20.0726 12.5997 17.2251 12.5997 16.5709V15.3812L14.8302 16.5071C16.849 17.5264 17.1162 17.5779 17.645 17.0487C18.6816 16.0121 18.3735 15.5553 15.5654 13.9651C13.5417 12.8189 13.4404 12.686 12.8102 10.3572C12.2319 8.22172 11.5976 7.35174 10.7862 7.58144C10.6484 7.62047 9.52477 7.71467 8.28962 7.79048ZM5.02741 12.4143C4.89943 12.7378 5.01652 13.9201 5.2875 15.0415C5.76865 17.0333 5.77991 17.046 5.7679 15.5797C5.75026 13.4746 5.32616 11.6611 5.02741 12.4143Z" />
                     </svg>
                 </div>
-                <div class="option-text"> <span>Habbit</span></div>
+                <div class="option-text"> <span>Habit</span></div>
     
             </li>
         </ul>
@@ -60,7 +60,7 @@ export default function createTrackerComponent() {
     bindFormCreateTracker(nodeParent.querySelector<HTMLDivElement>('#createTracker')!)
 
     // fetch to get trackers from server
-    httpGetTrackers().then(res => {  
+    httpGetTrackers().then(res => {
         myTrackersComponent(nodeParent, res);
     })
 }
@@ -75,7 +75,7 @@ export function setupSelect(element: HTMLDivElement) {
     items.forEach(item => {
         item.addEventListener('click', () => {
             selected!.innerHTML = `<input class="select-value" type="radio" value="${item.getAttribute('value')}" checked>` + item.innerHTML
-
+            console.log(item)
         })
     })
 }
@@ -89,7 +89,7 @@ function bindFormCreateTracker(nodeParent: HTMLElement) {
         const typeTracker = selectedTypeTracker?.value;
         if (!name) { alert("name must be not empty"); return; }
         if (!typeTracker) { alert("type tracker must be selected"); return; }
-        
+
         httpCreateTracker(
             {
                 name,
