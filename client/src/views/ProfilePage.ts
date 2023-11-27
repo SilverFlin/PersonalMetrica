@@ -14,11 +14,15 @@ export interface RecordList {
   typeRecord: string,
 }
 
-export interface HabitRecord {
-
+interface Record {
+  creationTime: string,
 }
 
-export interface TimerRecord {
+export interface HabitRecord extends Record {
+  habitCompletion: boolean,
+}
+
+export interface TimerRecord extends Record {
   durationInSeconds: number,
 }
 
@@ -32,11 +36,6 @@ export interface UserProfile {
 async function loadUser(): Promise<UserProfile | null> {
   let user: UserProfile | null = await httpGetUserFromToken(sessionStorage.getItem("token")!)
   return user;
-}
-
-async function getTrackerRecords(trackerId: string): Promise<any> {
-  let recordList = await httpGetRecordList(trackerId);
-  return recordList
 }
 
 function timeAgo(timestamp: Date): string {

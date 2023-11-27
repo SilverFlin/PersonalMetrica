@@ -1,8 +1,8 @@
-import { httpGetUserFromToken } from "../hooks/requests"
+
 
 export async function bindLandingPage() {
     // get token
-    const user: User | null = await httpGetUserFromToken(sessionStorage.getItem("token") || "");
+    // const user: User | null = await httpGetUserFromToken(sessionStorage.getItem("token") || "");
 
 }
 

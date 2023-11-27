@@ -30,7 +30,7 @@ export function bindLoginPage() {
 
       sessionStorage.setItem("token", token);
 
-      window.location.hash = "#dashboard";
+      window.location.hash = "#trackers";
     } else {
       alert(`User ${email} not found`)
     }
@@ -53,8 +53,8 @@ export default function getLoginPage() {
         <div
           class="shrink-0 rounded-sm flex w-[31.5rem] h-72 justify-center align-center gap-12 flex-col"
         >
-          <input id="email-login" class="bg-red-200 h-16" type="email" />
-          <input id="password-login" class="bg-red-200 h-16" type="password" />
+          <input id="email-login" class="bg-red-200 h-16 p-5" type="email" />
+          <input id="password-login" class="bg-red-200 h-16 p-5" type="password" />
         </div>
 
         <button
