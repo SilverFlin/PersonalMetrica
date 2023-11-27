@@ -19,8 +19,9 @@ export default function createTrackerComponent() {
                     </svg>
                 </div>
                 <div class="option-text"> <span>Tracker</span></div>
-    
-            </div>
+                
+                </div>
+                <input class="select-value" type="text" value="none" >
         </div>
         <div class="arrow"><svg width="35" height="23" viewBox="0 0 35 23" fill="none"
                 xmlns="http://www.w3.org/2000/svg">
@@ -65,19 +66,27 @@ export default function createTrackerComponent() {
     })
 }
 
-export function setupSelect(element: HTMLDivElement) {
+export function setupSelect(element: HTMLDivElement,handleChange?:any) {
     const selected = element.querySelector<HTMLDivElement>('.option-type')
     const items = element.querySelectorAll('.select-item')
+    const option = element.querySelector<HTMLInputElement>('.select-value');  
+    if(!option){
+        return;
+    }
     element.addEventListener('click', () => {
         element.classList.toggle('active')
     });
 
     items.forEach(item => {
         item.addEventListener('click', () => {
-            selected!.innerHTML = `<input class="select-value" type="radio" value="${item.getAttribute('value')}" checked>` + item.innerHTML
-            console.log(item)
+            selected!.innerHTML = `${item.innerHTML}`;  
+            const value = item.getAttribute('value')!;
+            option.setAttribute("value",value); 
+            if(handleChange){
+                handleChange(value);
+            }
         })
-    })
+    })    
 }
 
 function bindFormCreateTracker(nodeParent: HTMLElement) {
@@ -87,8 +96,8 @@ function bindFormCreateTracker(nodeParent: HTMLElement) {
         const selectedTypeTracker = nodeParent.querySelector<HTMLInputElement>('.select-value');
         const name = input?.value;
         const typeTracker = selectedTypeTracker?.value;
-        if (!name) { alert("name must be not empty"); return; }
-        if (!typeTracker) { alert("type tracker must be selected"); return; }
+        if (!name||/^s*$/.test(name)) { alert("name must not be empty"); return; }
+        if (!typeTracker ||typeTracker==='none') { alert("type tracker must be selected"); return; }
 
         httpCreateTracker(
             {
@@ -97,7 +106,7 @@ function bindFormCreateTracker(nodeParent: HTMLElement) {
             }
         ).then(() => {
             createTrackerComponent();
-            input!.value = ''
+            input!.value = 'none'
         })
         // handle error
 

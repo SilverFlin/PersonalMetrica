@@ -30,16 +30,27 @@ export default function trackerComponent(nodeParent: HTMLElement, data?: any): H
             trackerItem.appendChild(bodyItem);
             editItemTrackerComponent(headerItem, element);
 
-
+            const firstChart =element.typeTracker=='timer'?'lineChart':'barChart'
+            // TODO: evitar que se repita esta parte ···· 1-1
             httpGetRecordList(element.recordId)
-                .then((data) => {
-                    bodyItem.innerHTML += ` <canvas class="tracker-chart" id="graph-${element.recordId}"> </canvas>`
-                    createTrackerChart(`graph-${element.recordId}`, { records: data.records, title: element.name }, element.typeTracker)
-                })
+            .then((data) => {
+                bodyItem.innerHTML = ` <canvas class="tracker-chart" id="graph-${element.recordId}"> </canvas>`
+                createTrackerChart(`graph-${element.recordId}`, { records: data.records, title: element.name }, 
+                firstChart
+                )
+            })
 
             footerItem.innerHTML = `<button class="btn-primary">Capture entry</button>`
             footerItem.innerHTML += createModalDialog(getForm(element.typeTracker));
-            createSelect(footerItem, { idHTMLElement: 'select-type-graphic' })
+            createSelect(footerItem, 
+                (chart:string) => {
+                // TODO: evitar que se repita esta parte ···· 1-2
+                httpGetRecordList(element.recordId)
+                .then((data) => {
+                    bodyItem.innerHTML = ` <canvas class="tracker-chart" id="graph-${element.recordId}"> </canvas>`
+                    createTrackerChart(`graph-${element.recordId}`, { records: data.records, title: element.name }, chart)
+                })
+            },{ idHTMLElement: 'select-type-graphic' })
             trackerItem.appendChild(footerItem);
 
 
@@ -161,10 +172,10 @@ function createTrackerChart(idHTMLElement: string, data: { records: any, title: 
         title: data.title
     }
 
-    if (typeTracker === 'timer') {
+    if (typeTracker === 'lineChart') {
         chartData.values = data.records.map((record: any) => record.durationInSeconds)
         return createLineChart(idHTMLElement, chartData);
-    } else if (typeTracker === 'habit') {
+    } else if (typeTracker === 'barChart') {
         chartData.values = data.records.map((record: any) => record.habitCompletion)
         return createBarChart(idHTMLElement, chartData);
     }
