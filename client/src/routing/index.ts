@@ -59,7 +59,7 @@ const routes: Routes = {
         description: "Trackers page",
         template: renderTrackerPage,
         bindElements: bindTrackerPage,
-        // isProtected: true
+        isProtected: true
     }
 }
 
