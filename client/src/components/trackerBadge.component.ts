@@ -1,7 +1,7 @@
-import { RecordList, TimerRecord, Tracker } from "../views/ProfilePage";
+import { HabitRecord, RecordList, TimerRecord, Tracker } from "../views/ProfilePage";
 
 function getHabitSvg() {
-    return `<svg
+  return `<svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="101"
                   height="100"
@@ -19,7 +19,7 @@ function getHabitSvg() {
 }
 
 function getTimerSvg() {
-    return `
+  return `
     <svg
         xmlns="http://www.w3.org/2000/svg"
         width="101"
@@ -38,48 +38,58 @@ function getTimerSvg() {
 
 
 function createBadgeDescription(recordList: RecordList) {
-    let coreValue: number = 0;
+  let coreValue: number = 0;
 
 
 
-    let innerText = ''
-    if (recordList.typeRecord === 'timer') {
-        recordList.records.forEach((record) => {
-            coreValue += (record as TimerRecord).durationInSeconds;
-        })
-        coreValue = coreValue / recordList.records.length
-        coreValue = coreValue / 60
+  let innerText = ''
+  if (recordList.typeRecord === 'timer') {
+    recordList.records.forEach((record) => {
+      coreValue += (record as TimerRecord).durationInSeconds;
+    })
+    coreValue = coreValue / recordList.records.length
+    coreValue = coreValue / 60
 
 
-        innerText = `avarage of <span class="inline text-[#FF5F5F]">${coreValue.toFixed(3)}</span> min`
-    } else if (recordList.typeRecord === 'habit') {
-        recordList.records.forEach((record) => {
-            // TODO get by date
-            console.log(record)
-            coreValue += 1;
-        })
-        innerText = `<span class="text-[#FF5F5F] inline">${coreValue}</span> consecutive days`
+    innerText = `avarage of <span class="inline text-[#FF5F5F]">${coreValue.toFixed(3)}</span> min`
+  } else if (recordList.typeRecord === 'habit') {
+    let coreValue = 0;
+    let streak = 0;
+    const today = new Date();
+    let index = 0;
+    while (index < recordList.records.length && isSameDay(new Date(recordList.records[index].creationTime), today)) {
+      streak += 1;
+      coreValue += 1;
+      index += 1;
     }
+    innerText = `<span class="text-[#FF5F5F] inline">${coreValue}</span> consecutive days`
+  }
 
-
-    return innerText
+  return innerText
 }
 
+function isSameDay(date1: Date, date2: Date) {
+  return (
+    date1.getFullYear() === date2.getFullYear() &&
+    date1.getMonth() === date2.getMonth() &&
+    date1.getDate() === date2.getDate()
+  );
+}
 
 function getTrackerBadgeComponent(tracker: Tracker, recordList: RecordList) {
-    let svg: string = '';
-    if (tracker.typeTracker === "habit") {
-        svg = getHabitSvg();
-    } else if (tracker.typeTracker === "timer") {
-        svg = getTimerSvg();
-    }
+  let svg: string = '';
+  if (tracker.typeTracker === "habit") {
+    svg = getHabitSvg();
+  } else if (tracker.typeTracker === "timer") {
+    svg = getTimerSvg();
+  }
 
 
-    const description = createBadgeDescription(recordList)
+  const description = createBadgeDescription(recordList)
 
-    // TODO add dynamic description
+  // TODO add dynamic description
 
-    return `<div
+  return `<div
               class="rounded-[0.6rem] bg-gray-200 flex w-[13rem] h-[8.5rem] px[0.3rem] pb-[1.5rem] flex-col justify-end items-center gap-[0.6rem]"
             >
               <div
