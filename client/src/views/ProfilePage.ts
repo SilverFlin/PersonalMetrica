@@ -14,11 +14,15 @@ export interface RecordList {
   typeRecord: string,
 }
 
-export interface HabitRecord {
-
+interface Record {
+  creationTime: string,
 }
 
-export interface TimerRecord {
+export interface HabitRecord extends Record {
+  habitCompletion: boolean,
+}
+
+export interface TimerRecord extends Record {
   durationInSeconds: number,
 }
 
