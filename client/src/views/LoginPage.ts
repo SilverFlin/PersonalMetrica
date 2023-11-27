@@ -30,7 +30,7 @@ export function bindLoginPage() {
 
       sessionStorage.setItem("token", token);
 
-      window.location.hash = "#dashboard";
+      window.location.hash = "#trackers";
     } else {
       alert(`User ${email} not found`)
     }
