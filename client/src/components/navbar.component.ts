@@ -17,7 +17,7 @@ function getLandingPageNavbar() {
       class="flex h-32 w-full py-4 gap-6 items-center flex-col justify-center"
     >
       <div class="flex px-24 w-full h-full justify-between items-center">
-        <div id="logo" class="w-28 h-14 bg-gray-200">Logo</div>
+      <a href="/"><div id="logo" class="w-28 h-14 bg-gray-200">Logo</div></a>
         <div class="h-14 w-[45rem]">
           <nav
             class="list-none text-4xl font-light flex h-full w-full justify-between items-center shrink-0"
@@ -46,7 +46,9 @@ function getAppNavbar() {
       class="flex h-32 w-full py-4 gap-6 items-center flex-col justify-center"
     >
       <div class="flex px-24 w-full h-full justify-between items-center">
+      <a href="#dashboard">
         <div id="logo" class="w-28 h-14 bg-gray-200">Logo</div>
+        </a>
         <div class="h-14 w-[45rem]">
           <nav
             class="list-none text-4xl font-light flex h-full w-full justify-between items-center shrink-0"
@@ -56,12 +58,12 @@ function getAppNavbar() {
             <li><a href="#help">Help</a></li>
           </nav>
         </div>
-        <div
+        <button
           id="nav-logout-btn"
           class="text-4xl font-light justify-center shrink-0 items-center flex w-48 h-14"
         >
           Log out
-        </div>
+        </button>
       </div>
       <hr class="border-0 bg-gray-200 h-px w-full" />
     </div>
