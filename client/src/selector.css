@@ -111,9 +111,10 @@ span {
     z-index: 9999999;
 }
 
-.option-type>.select-value {
+.select-value {
     opacity: 0;
     position: absolute;
+    pointer-events: none;
 }
 
 /**
