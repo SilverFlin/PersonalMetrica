@@ -1,6 +1,6 @@
 import { setupSelect } from "./createTracker.component";
 
-export default function createSelect (nodeParent:HTMLElement, data?:any) {
+export default function createSelect (nodeParent:HTMLElement, handle:any,data?:any) {
     // initialize select component
     const selectType =document.createElement('div');  
     selectType.classList.add('select-type');
@@ -19,6 +19,8 @@ export default function createSelect (nodeParent:HTMLElement, data?:any) {
             <div class="option-text"> <span>Chart?</span></div>
 
         </div>
+        <input class="select-value" type="text" value="lineChart" >
+
     </div>
     <div class="arrow"><svg width="35" height="23" viewBox="0 0 35 23" fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -47,6 +49,6 @@ export default function createSelect (nodeParent:HTMLElement, data?:any) {
     </ul>  
 `
 
-    setupSelect(selectType)
+    setupSelect(selectType,handle)
 
 }
