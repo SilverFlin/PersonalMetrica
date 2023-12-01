@@ -151,6 +151,21 @@ async function httpCreateRecordItem(id:string,body: any) {
     return data;
 }
 
+async function httpUploadProfileImg(params:FormData) {
+    const { data } = await instance({
+        method: 'POST',
+        url: '/account/upload',
+        data: params,
+        headers: {
+            'Content-Type': 'multipart/form-data',
+            'x-auth-token': token()
+        }
+    });
+
+    return data;
+    
+}
+
 
 export {
     httpRegisterUser,
@@ -162,5 +177,6 @@ export {
     httpDeleteTracker,
     logoutUser,
     httpGetRecordList,
-    httpCreateRecordItem
+    httpCreateRecordItem,
+    httpUploadProfileImg,
 };

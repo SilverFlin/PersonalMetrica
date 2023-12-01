@@ -1,5 +1,5 @@
 import getTrackerBadgeComponent from "../components/trackerBadge.component";
-import { httpGetRecordList, httpGetUserFromToken } from "../hooks/requests";
+import { httpGetRecordList, httpGetUserFromToken, httpUploadProfileImg } from "../hooks/requests";
 
 export interface Tracker {
   _id: string,
@@ -86,19 +86,27 @@ export default async function getProfilePage() {
         <div
           class="shadow-xl bg-gray-100 rounded-tl-[2.2rem] flex w-[27.5rem] h-[25rem] flex-col justify-center gap-7 items-center"
         >
-          <div class="flex w-[23rem] justify-center items-start gap-[5.125rem]">
-            <div
-              class="bg-cover rounded-full w-[8.5rem] h-[8.5rem]"
-              style="
-                background-image: url('https://source.unsplash.com/random');
-              "
-            ></div>
+          <div class="flex w-[23rem] justify-center items-start gap-[5.125rem] ">
+
+          <div class="personal-image">
+          <label class="label">
+          <input type="file" id="upload-profile"/>
+          <figure class="personal-figure">
+            <img src="${user?.url_img}" class="personal-avatar" alt="avatar">
+            <figcaption class="personal-figcaption">
+              <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
+            </figcaption>
+          </figure>
+        </label>
+        </div>
+
             <div
               class="flex flex-col justify-between items-end flex-1 self-stretch"
             >
               <p class="text-[2rem] font-extralight max-w-[10rem] text-ellipsis overflow-hidden">${username}</p>
               <p class="text-[2rem] font-extralight">${userDaysOld}</p>
             </div>
+            
           </div>
           <div
             class="shadow-xl bg-gray-100 rounded-[1.06rem] flex w-[15.75rem] py-[1.5rem] justify-center align-center gap-[0.625]"
@@ -136,3 +144,23 @@ export default async function getProfilePage() {
       </div>
     </div>`
 }
+
+
+export function bindProfilePage(){
+  const input = document.getElementById("upload-profile") as HTMLInputElement;
+  if(!input) return;
+  input.addEventListener("change", () => {
+    const file = input.files?.[0];
+    if (file) {
+      const formData = new FormData();
+      formData.append("file", file);
+      if(!formData) return
+      httpUploadProfileImg(formData).then((data) => {
+        const img = document.querySelector(".personal-avatar") as HTMLImageElement;
+        img.src = data.url_img; 
+      })
+      
+    }
+  });
+}
+      
