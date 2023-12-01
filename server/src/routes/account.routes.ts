@@ -3,6 +3,8 @@ import { AccountController } from '../controllers/account.controller'
 import { BadRequest } from '../exceptions/Errors'
 import { accountValidator, paramIdValidator } from '../middlewares/validator'
 import { isAuthenticated } from '../middlewares/auth'
+import multer from "../utils/multer.config";
+import { AccountDTO } from '../types'
 
 const router = Router()
 
@@ -59,5 +61,25 @@ router.delete('/:id', isAuthenticated, paramIdValidator, (req, res) => {
         })
 })
 
+router.post('/upload',isAuthenticated, multer.single('file'),(req, res) => {
+    console.log("test")
+    
+    const file: Express.Multer.File = req.file as Express.Multer.File
+    console.log(file)
+    if(!file){
+        res.status(400).json({ message: "No file uploaded" });
+    }
+    const accountController = new AccountController()
+    accountController.findAccount({_id: req.user?.id}).then((accountFound) => {
+        accountFound.url_img =   `/static/${file.filename}`
+        console.log(file.filename)
+        return accountController.updateAccount({_id: req.user?.id}, accountFound)
+    }).then((accountUpdated) => {
+        return  res.status(200).json(accountUpdated)
+    }).catch((error)=>{
+        console.log(error)
+        return res.status(500).json({ message: error.message })
+    })
+ });
 
 export default router
