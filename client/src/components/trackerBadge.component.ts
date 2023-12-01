@@ -1,4 +1,4 @@
-import { HabitRecord, RecordList, TimerRecord, Tracker } from "../views/ProfilePage";
+import { RecordList, TimerRecord, Tracker } from "../views/ProfilePage";
 
 function getHabitSvg() {
   return `<svg
