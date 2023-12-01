@@ -70,12 +70,16 @@ router.post('/upload',isAuthenticated, multer.single('file'),(req, res) => {
         res.status(400).json({ message: "No file uploaded" });
     }
     const accountController = new AccountController()
-    accountController.findAccount({_id: req.user?.id}).then((accountFound) => {
-        accountFound.url_img =   `/static/${file.filename}`
-        console.log(file.filename)
-        return accountController.updateAccount({_id: req.user?.id}, accountFound)
-    }).then((accountUpdated) => {
-        return  res.status(200).json(accountUpdated)
+    accountController.findAccount({_id: req.user?.id})
+    .then(async(accountFound) => {
+        // TODO: delete before url img if not default img
+        
+        const url =   `http://localhost:3000/static/${file.filename}`
+        
+        accountFound.url_img = url
+        console.log(accountFound)
+      const update= await accountController.updateAccount({_id: req.user?.id}, accountFound)
+      return  res.status(200).json({url_img:url})
     }).catch((error)=>{
         console.log(error)
         return res.status(500).json({ message: error.message })

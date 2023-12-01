@@ -1,6 +1,7 @@
 import { getAppNavbar, getLandingPageNavbar } from "../components/navbar.component";
 import { bindLandingPage } from "../views/LandingPage";
 import { bindLoginPage } from "../views/LoginPage";
+import { bindProfilePage } from "../views/ProfilePage";
 import { bindRegisterPage } from "../views/RegisterPage";
 import { bindTrackerPage } from "../views/TrackerPage";
 import { renderDashboardPage, renderLandingPage, renderLoginPage, renderProfilePage, renderRegisterPage, renderTrackerPage } from "../views/renderPages";
@@ -52,6 +53,7 @@ const routes: Routes = {
         title: "Profile",
         description: "Profile page",
         template: renderProfilePage,
+        bindElements: bindProfilePage,
         isProtected: true
     },
     trackers: {
