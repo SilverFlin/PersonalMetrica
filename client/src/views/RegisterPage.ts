@@ -39,8 +39,6 @@ export function bindRegisterPage() {
 
 
     if (user) {
-      // TODO show success message
-      alert(`User ${user.email} created successfully`)
       window.location.hash = "#login";
     }
   });

@@ -23,15 +23,17 @@ export default function getLandingPage() {
             <h1
               class="font-sans font-semibold text-6xl leading-[4.29rem] self-stretch"
             >
+<<<<<<< Updated upstream
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti.
+=======
+                Transformando Vidas con PersonalMetrica: Descubre el Poder del Análisis de Hábitos y Gestión del Tiempo
+>>>>>>> Stashed changes
             </h1>
             <p
             id="landing-register-btn"
             class="cursor-pointer text-[2rem] text-[#FFFF] font-semibold flex w-[11.75rem] h-[4rem] justify-center items-center gap-[0.65rem] rounded-[0.1875rem] bg-[#5BFAC0]"
             >
-              Sit aliquam quam consectetur enim habitant sollicitudin. Mus
-              integer lobortis morbi iaculis dignissim. Consequat viverra lorem
-              hendrerit arcu aliquam quam.
+                Descubre el potencial de PersonalMetrica para transformar tu vida. Analiza tus hábitos, gestiona tu tiempo y logra tus metas personales con eficacia. Únete hoy.
             </p>
             <div
               class="text-[2rem] text-[#FFFF] font-semibold flex w-[11.75rem] h-[4rem] justify-center items-center gap-[0.65rem] rounded-[0.1875rem] bg-[#5BFAC0]"
@@ -71,12 +73,12 @@ export default function getLandingPage() {
             <h1
               class="text-right text-6xl font-semibold leading-[4.29rem] self-stretch"
             >
-              Cursus vel sit felis cum vivamus.
+            Descubre el Camino del Éxito con PersonalMetrica
+
             </h1>
             <p class="text-[#616161] text-right text-2xl leading-[1.875rem]">
-              Sit aliquam quam consectetur enim habitant sollicitudin. Mus
-              integer lobortis morbi iaculis dignissim. Consequat viverra lorem
-              hendrerit arcu aliquam quam.
+                Transforma tu vida con análisis profundo y gestión efectiva del tiempo. Con PersonalMetrica, alcanza tus metas de manera eficaz. ¡Únete hoy!
+
             </p>
           </div>
         </div>

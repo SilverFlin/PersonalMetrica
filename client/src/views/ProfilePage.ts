@@ -92,7 +92,7 @@ export default async function getProfilePage() {
           <label class="label">
           <input type="file" id="upload-profile"/>
           <figure class="personal-figure">
-            <img src="${user?.url_img}" class="personal-avatar" alt="avatar">
+            <img src="${user?.url_img}" class="personal-avatar">
             <figcaption class="personal-figcaption">
               <img src="https://raw.githubusercontent.com/ThiagoLuizNunes/angular-boilerplate/master/src/assets/imgs/camera-white.png">
             </figcaption>
@@ -146,21 +146,21 @@ export default async function getProfilePage() {
 }
 
 
-export function bindProfilePage(){
+export function bindProfilePage() {
   const input = document.getElementById("upload-profile") as HTMLInputElement;
-  if(!input) return;
+  if (!input) return;
   input.addEventListener("change", () => {
     const file = input.files?.[0];
     if (file) {
       const formData = new FormData();
       formData.append("file", file);
-      if(!formData) return
+      if (!formData) return
       httpUploadProfileImg(formData).then((data) => {
         const img = document.querySelector(".personal-avatar") as HTMLImageElement;
-        img.src = data.url_img; 
+        img.src = data.url_img;
       })
-      
+
     }
   });
 }
-      
+
