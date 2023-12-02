@@ -1,7 +1,10 @@
 
 
 export async function bindLandingPage() {
-
+    const registerBtn = document.getElementById("landing-register-btn")!;
+    registerBtn.addEventListener("click", () => {
+        window.location.hash = "#register";
+    });
 
 }
 
@@ -20,8 +23,7 @@ export default function getLandingPage() {
             <h1
               class="font-sans font-semibold text-6xl leading-[4.29rem] self-stretch"
             >
-              Transforming the way organizations define, design, and build
-              software.
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse potenti.
             </h1>
             <p
               class="text-[#616161] text-2xl font-normal leading-[1.87rem] self-stretch"
@@ -31,7 +33,8 @@ export default function getLandingPage() {
               hendrerit arcu aliquam quam.
             </p>
             <div
-              class="text-[2rem] text-[#FFFF] font-semibold flex w-[11.75rem] h-[4rem] justify-center items-center gap-[0.65rem] rounded-[0.1875rem] bg-[#5BFAC0]"
+                id="landing-register-btn"
+              class="cursor-pointer text-[2rem] text-[#FFFF] font-semibold flex w-[11.75rem] h-[4rem] justify-center items-center gap-[0.65rem] rounded-[0.1875rem] bg-[#5BFAC0]"
             >
               Register
             </div>
@@ -47,7 +50,7 @@ export default function getLandingPage() {
         ></div>
       </div>
       <div
-        class="border-[38px]  bg-center bg-auto border-[#f5f9f5] w-[28.6875rem] h-[23.626rem] shrink-0 absolute top-[75.5rem]"
+        class="border-[38px]  bg-center bg-cover border-[#f5f9f5] w-[28.6875rem] h-[23.626rem] shrink-0 absolute top-[75.5rem]"
         style="background-image: url('assets/images/hero3.jpg')"
       ></div>
       <!-- Frame2 -->
