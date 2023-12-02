@@ -22,3 +22,16 @@ Esta aplicación te permite gestionar tus actividades diarias de manera eficient
 4. Explora las métricas y gráficas para obtener información sobre tu productividad.
 5. Personaliza las gráficas según tus preferencias.
 6. Gestiona tus actividades de manera eficiente.
+
+## Inicio del Proyecto
+Para iniciar el proyecto, sigue estos pasos:
+
+Ajusta las variables de entorno utilizando el archivo server/.env.example como referencia.
+
+Ejecuta los siguientes comandos en la carpeta base del proyecto:
+
+```bash
+npm run install
+npm run deploy
+```
+Esto garantizará una configuración adecuada y desplegará el proyecto de manera correcta.
