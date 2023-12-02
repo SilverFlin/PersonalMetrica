@@ -37,6 +37,7 @@ function bindModalRecord(nodeParent: HTMLElement, element: any) {
                 input.checked = false;
                 formRecord.removeAttribute('disabled');
                 saveButton.removeAttribute('disabled');
+                window.location.reload();
             });
     };
 
