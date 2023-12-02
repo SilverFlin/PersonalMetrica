@@ -30,27 +30,26 @@ export default function trackerComponent(nodeParent: HTMLElement, data?: any): H
             trackerItem.appendChild(bodyItem);
             editItemTrackerComponent(headerItem, element);
 
-            const firstChart =element.typeTracker=='timer'?'lineChart':'barChart'
+            const firstChart = element.typeTracker == 'timer' ? 'lineChart' : 'barChart'
             // TODO: evitar que se repita esta parte ···· 1-1
             httpGetRecordList(element.recordId)
-            .then((data) => {
-                bodyItem.innerHTML = ` <canvas class="tracker-chart" id="graph-${element.recordId}"> </canvas>`
-                createTrackerChart(`graph-${element.recordId}`, { records: data.records, title: element.name }, 
-                firstChart
-                )
-            })
-
-            footerItem.innerHTML = `<button class="btn-primary">Capture entry</button>`
-            footerItem.innerHTML += createModalDialog(getForm(element.typeTracker));
-            createSelect(footerItem, 
-                (chart:string) => {
-                // TODO: evitar que se repita esta parte ···· 1-2
-                httpGetRecordList(element.recordId)
                 .then((data) => {
                     bodyItem.innerHTML = ` <canvas class="tracker-chart" id="graph-${element.recordId}"> </canvas>`
-                    createTrackerChart(`graph-${element.recordId}`, { records: data.records, title: element.name }, chart)
+                    createTrackerChart(`graph-${element.recordId}`, { records: data.records, title: element.name },
+                        firstChart
+                    )
                 })
-            },{ idHTMLElement: 'select-type-graphic' })
+                footerItem.innerHTML = `<button class="btn-primary">Capture entry</button>`
+            footerItem.innerHTML += createModalDialog(getForm(element.typeTracker));
+            createSelect(footerItem,
+                (chart: string) => {
+                    // TODO: evitar que se repita esta parte ···· 1-2
+                    httpGetRecordList(element.recordId)
+                        .then((data) => {
+                            bodyItem.innerHTML = ` <canvas class="tracker-chart" id="graph-${element.recordId}"> </canvas>`
+                            createTrackerChart(`graph-${element.recordId}`, { records: data.records, title: element.name }, chart)
+                        })
+                }, { idHTMLElement: 'select-type-graphic' })
             trackerItem.appendChild(footerItem);
 
 
@@ -96,7 +95,7 @@ function editItemTrackerComponent(nodeParent: HTMLElement, data: any): HTMLEleme
     editItem.classList.add('edit-item');
 
     editItem.innerHTML = `
-            <h4 id="name-tracker">${data.name} 
+    <h4 id="name-tracker" class="text-2xl">${data.name} 
                 <svg width="25px" height="25px" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" >
                     <path  d="m3.99 16.854-1.314 3.504a.75.75 0 0 0 .966.965l3.503-1.314a3 3 0 0 0 1.068-.687L18.36 9.175s-.354-1.061-1.414-2.122c-1.06-1.06-2.122-1.414-2.122-1.414L4.677 15.786a3 3 0 0 0-.687 1.068zm12.249-12.63 1.383-1.383c.248-.248.579-.406.925-.348.487.08 1.232.322 1.934 1.025.703.703.945 1.447 1.025 1.934.058.346-.1.677-.348.925L19.774 7.76s-.353-1.06-1.414-2.12c-1.06-1.062-2.121-1.415-2.121-1.415z" >
                     </path>
