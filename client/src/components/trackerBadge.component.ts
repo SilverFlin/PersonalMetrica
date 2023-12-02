@@ -53,16 +53,17 @@ function createBadgeDescription(recordList: RecordList) {
 
     innerText = `avarage of <span class="inline text-[#FF5F5F]">${coreValue.toFixed(3)}</span> min`
   } else if (recordList.typeRecord === 'habit') {
-    let coreValue = 0;
-    let streak = 0;
-    const today = new Date();
+    let consecutiveDays = 0;
+    let currentDay = new Date();
     let index = 0;
-    while (index < recordList.records.length && isSameDay(new Date(recordList.records[index].creationTime), today)) {
-      streak += 1;
-      coreValue += 1;
-      index += 1;
+    while (index < recordList.records.length) {
+      if (isSameDay(currentDay, new Date(recordList.records[index].creationTime))) {
+        consecutiveDays++;
+        currentDay.setDate(currentDay.getDate() - 1);
+      } else break;
+      index++;
     }
-    innerText = `<span class="text-[#FF5F5F] inline">${coreValue}</span> consecutive days`
+    innerText = `<span class="text-[#FF5F5F] inline">${consecutiveDays}</span> consecutive days`
   }
 
   return innerText

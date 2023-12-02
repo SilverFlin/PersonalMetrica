@@ -9,7 +9,7 @@ export function myTrackersComponent(nodeParent: HTMLElement, data?: any) {
     myTrackers.classList.add('my-trackers');
     myTrackersHeader.classList.add('my-trackers-header');
     myTrackersBody.classList.add('my-trackers-body');
-    myTrackersHeader.innerHTML = '<h1>My Trackers</h1>';
+    myTrackersHeader.innerHTML = '<h1 class="text-3xl">My Trackers</h1>';
     
     myTrackers.appendChild(myTrackersHeader);
     myTrackers.appendChild(myTrackersBody);
@@ -25,7 +25,7 @@ export function myTrackersComponent(nodeParent: HTMLElement, data?: any) {
         return;
     }
 
-   data.reverse();
+    data.reverse();
 
     trackerComponent(myTrackersBody, data)!
 
