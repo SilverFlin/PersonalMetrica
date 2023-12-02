@@ -6,6 +6,40 @@ function bindNavbar() {
     logoutUser();
     window.location.hash = "#login";
   });
+
+  const trackersBtn = document.getElementById("nav-trackers-item")!;
+  const profileBtn = document.getElementById("nav-profile-item")!;
+
+
+  const helpBtn = document.getElementById("nav-help-item")!;
+  // change color if url is #help
+  helpBtn.addEventListener("click", () => {
+    helpBtn.classList.add("text-[#5BFAC0]");
+    helpBtn.classList.remove("text-[#464646]");
+  });
+
+
+  // change color if url is #trackers
+  const url = window.location.hash;
+
+  if (url === "#trackers") {
+    trackersBtn.classList.add("text-[#5BFAC0]");
+    trackersBtn.classList.remove("text-[#464646]");
+  } else {
+    trackersBtn.classList.remove("text-[#5BFAC0]");
+    trackersBtn.classList.add("text-[#464646]");
+  }
+
+  // change color if url is #profile
+  if (url === "#profile") {
+    profileBtn.classList.add("text-[#5BFAC0]");
+    profileBtn.classList.remove("text-[#464646]");
+  } else {
+    profileBtn.classList.remove("text-[#5BFAC0]");
+    profileBtn.classList.add("text-[#464646]");
+  }
+
+
 }
 
 function getLandingPageNavbar() {
@@ -52,7 +86,7 @@ function getAppNavbar() {
       class="flex h-32 w-full py-4 gap-6 items-center flex-col justify-center"
     >
       <div class="flex px-24 w-full h-full justify-between items-center">
-      <a href="#dashboard">
+      <a href="#trackers">
         <div id="logo" class="w-28 h-14">
           <svg xmlns="http://www.w3.org/2000/svg" width="110" height="58" viewBox="0 0 110 58" fill="none">
             <ellipse cx="18.3333" cy="18.8987" rx="18.3333" ry="18.3987" fill="#00F0FF"/>
@@ -65,9 +99,9 @@ function getAppNavbar() {
           <nav
             class="list-none text-4xl font-light flex h-full w-full justify-between items-center shrink-0"
           >
-            <li><a href="#trackers" class="text-[#5BFAC0]">Trackers</a></li>
-            <li><a href="#profile">Profile</a></li>
-            <li><a href="#help">Help</a></li>
+            <li id="nav-trackers-item"><a  href="#trackers" >Trackers</a></li>
+            <li id="nav-profile-item"><a  href="#profile">Profile</a></li>
+            <li><a id="nav-help-item" href="#help">Help</a></li>
           </nav>
         </div>
         <button
