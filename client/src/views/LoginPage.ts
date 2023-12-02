@@ -58,6 +58,7 @@ export default function getLoginPage() {
           <input id="password-login" class="text-center h-16 p-5 border-b-8 border-[#5BFAC0]" type="password" required placeholder="password"/>
         </form>
         </div>
+        <p>Don't have an account? <a href="#register" class="text-[#5BFAC0]">Register</a></p>
 
         <button
         id="btn-login"
