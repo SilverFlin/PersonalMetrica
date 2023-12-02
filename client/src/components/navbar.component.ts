@@ -1,11 +1,9 @@
 import { logoutUser } from "../hooks/requests";
 
 function bindNavbar() {
-  // add event listener to logout button
   const logoutBtn = document.getElementById("nav-logout-btn")!;
   logoutBtn.addEventListener("click", () => {
     logoutUser();
-    alert("User logged out successfully");
     window.location.hash = "#login";
   });
 }
@@ -55,7 +53,7 @@ function getAppNavbar() {
     >
       <div class="flex px-24 w-full h-full justify-between items-center">
       <a href="#dashboard">
-        <div id="logo" class="w-28 h-14 bg-gray-200">
+        <div id="logo" class="w-28 h-14">
           <svg xmlns="http://www.w3.org/2000/svg" width="110" height="58" viewBox="0 0 110 58" fill="none">
             <ellipse cx="18.3333" cy="18.8987" rx="18.3333" ry="18.3987" fill="#00F0FF"/>
             <rect y="18.538" width="18.6928" height="38.962" fill="#00F0FF"/>
